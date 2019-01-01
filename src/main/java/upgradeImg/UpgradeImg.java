@@ -17,7 +17,8 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class UpgradeImg extends JPanel {
-    protected int vusotaElementa = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.VUSOTA_ELEMENTA);
+	private static final long serialVersionUID = 1L;
+	protected int vusotaElementa = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.VUSOTA_ELEMENTA);
     protected int[] imgStart;
     protected int imgShirina;
     protected int imgVusota;
@@ -78,7 +79,7 @@ public abstract class UpgradeImg extends JPanel {
 
     public void drawPoints() {
         draw_modifyImg.setPoints(points);
-    } ;
+    } 
 
     public abstract Image getSummaImg();
 

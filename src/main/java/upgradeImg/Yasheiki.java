@@ -20,7 +20,8 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class Yasheiki extends UpgradeImg {
-    private JCheckBox jCheckBox_simetria = new JCheckBox("Симетрія (відстань між точками по X та Y однакова)");
+	private static final long serialVersionUID = 1L;
+	private JCheckBox jCheckBox_simetria = new JCheckBox("Симетрія (відстань між точками по X та Y однакова)");
     private JScrollBar jScrollBar_shilnistX;
     private JScrollBar jScrollBar_shilnistY;
     private JScrollBar jScrollBar_tovshinaPeremusok;

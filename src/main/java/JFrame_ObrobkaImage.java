@@ -28,10 +28,10 @@ import static java.awt.Scrollbar.HORIZONTAL;
  * To change this template use File | Settings | File Templates.
  */
 public class JFrame_ObrobkaImage extends JFrame {
-
+	private static final long serialVersionUID = 1L;
     //Параметри та елементи вікна обробки
 
-    JFrame_ObrobkaEgg jFrame_obrobkaEgg;
+	JFrame_ObrobkaEgg jFrame_obrobkaEgg;
 
     JPanel mainPanel;
     JPanel jpanelKnopki;
@@ -39,9 +39,6 @@ public class JFrame_ObrobkaImage extends JFrame {
     int shirinaOkna = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.SHIRINA_OKNA_GRAFIC) +
             Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.SHIRINA_OKNA_RAZREZ);
     int vusotaElementa = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.VUSOTA_ELEMENTA);
-    private boolean nowScale = true;
-
-
     JLabel jlabel_podpisTonalnist;
     JLabel jlabel_shisloTonalnist;
 
@@ -184,6 +181,7 @@ public class JFrame_ObrobkaImage extends JFrame {
                 new Setka(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new UmenshenieLinii(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new Yasheiki(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
+                new LineToPoints(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new Krestiki(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new GeometriaRavnomerno(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new Geometria(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
