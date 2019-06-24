@@ -1,10 +1,12 @@
 import Config.Param_SnatieRazmerov;
 import drawPanels.Draw_SnatieRazmerov;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -505,8 +507,11 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void loadRazrezFromFile() {
         try {
+        	File fpng = new File("tmpSave/Razrez.res");
+			if (!fpng.exists())
+				fpng = new File("src/main/resources/tmpSave/Razrez.res");			
             RandomAccessFile rf =
-                    new RandomAccessFile("tmpSave\\Razrez.res", "rw");
+                    new RandomAccessFile(fpng, "rw");
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {

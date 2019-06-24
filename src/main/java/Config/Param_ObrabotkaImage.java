@@ -13,7 +13,7 @@ public class Param_ObrabotkaImage {
     private static Param_ObrabotkaImage instance;
     private ResourceBundle resourceBundle;
     //класс извлекает информацию из файла messages. properties
-    private static final String BUNDLE_NAME = "ObrabotkaImage";
+    private static final String BUNDLE_NAME = "ObrabotkaImage" + Param_Profile.getFileAppender();
     public static final String VUSOTA_ELEMENTA = "VUSOTA_ELEMENTA";
     public static final String VUSOTA_OKNA = "VUSOTA_OKNA";
     public static final String SHIRINA_OKNA_GRAFIC = "SHIRINA_OKNA_GRAFIC";

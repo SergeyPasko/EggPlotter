@@ -5,11 +5,14 @@
  * Time: 15:31
  * To change this template use File | Settings | File Templates.
  */
-public class TesrRun {
-    public static void main(String args[]) {
+public class TestRun {
+    public static void main(String args[]) throws InterruptedException {
         Zapusk zapusk = new Zapusk();
-        zapusk.dvijenie.goTo( 1580, 0,0, 1100, false);
+        int value = 2420;
+        zapusk.dvijenie.goTo( value, 0,0, 500, false);
+        Thread.sleep(3000);
 
+        zapusk.dvijenie.goTo( 0, 0,0, 500, false);
 
         zapusk.dvijenie.notSignalXYZ(true, true, true);
         System.exit(0);

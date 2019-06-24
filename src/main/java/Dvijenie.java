@@ -1,8 +1,6 @@
-import jnpout32.pPort;
 import Config.Param_Dvijenie;
-
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
+import Config.Param_Profile;
+import jnpout32.pPort;
 
 /**
  * Created with IntelliJ IDEA. User: spasko Date: 16.09.14 Time: 15:55 To change
@@ -24,13 +22,18 @@ class Dvijenie {
 	int vusotaPodjomaNashalna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.VUSOTAPODJOMANASHALNA);
 	int cmechenieNashalneY = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.SMESHENIENASHALNE);
 	int komandNaPovorot = 1600;
-	private int vverhVnuzY[] = new int[] { 1, 4, 2, 8 };
-	private int vlevoVpravoX[] = new int[] { 128, 32, 64, 16 };
+	private int vverhVnuzY[] = { 1, 4, 2, 8 };
+	private int vlevoVpravoX[] = { 128, 32, 64, 16 };
 	private int vverhVnuzZ[] = { 15, 14, 10, 8, 9, 1, 3, 7 };
-	// {15, 14, 10, 8, 9, 1, 3, 7};
 	/*
-	 * Зміщення вверх/вниз на 100мм 1000команд поворот вліво/вправо на 360град
-	 * 1580команд зміщення вверх/вниз по Z на 34мм 400команд 34мм 2000команд
+	 * Перший Зміщення вверх/вниз на 100мм 1000команд поворот вліво/вправо на
+	 * 360град 1580команд зміщення вверх/вниз по Z на 34мм 400команд 2000команд
+	 */
+
+	/*
+	 * Другий Зміщення вверх/вниз на 166мм 2000команд поворот вліво/вправо на
+	 * 360град 2420команд зміщення вверх/вниз по Z на 166мм 2000команд
+	 * 2000команд
 	 */
 
 	private LPT_work lptWork = new LPT_work();
@@ -50,10 +53,22 @@ class Dvijenie {
 		this.zapusk = zapusk;
 		pressedBite = Integer.highestOneBit(lptWork.read((short) (pPort.portAddress + 1)));
 		shustvitelnostVumiruvanna = zapusk.snatieRazmerov.jscrollBar_chustvitelnostVumiruvanna.getValue();
+		if (Param_Profile.isSecondGeneration()) {
+			vlevoVpravoX = new int[] { 1, 3, 2, 6, 4, 12, 8, 9 };
+			vverhVnuzY = new int[] { 128, 160, 32, 96, 64, 80, 16, 144 };
+			vverhVnuzZ = new int[] { 15, 14, 10, 2, 3, 1, 9, 13 };
+		}
 	}
 
 	// Команди для моторів на переміщення на один крок, з врахуванням люфтів
 	public void dvijenieNaOdinHag(Napravlenie_dvigenia napravlenie, boolean izmenenieKoordinat, int scorost) {
+		int multiStepsZ = 4;
+		int multiScorostZ=scorost;
+		if (Param_Profile.isSecondGeneration()) {
+			multiStepsZ = 0;
+		} else{
+			multiScorostZ=scorost/2;
+		}
 		switch (napravlenie) {
 		case VVERH:
 			popravkaLuftov(Napravlenie_dvigenia.VVERH, scorost);
@@ -141,10 +156,10 @@ class Dvijenie {
 				pozitsia_z--;
 			else
 				popravka_z--;
-			podashaSignalaZ(scorost);
-			for (int i = 0; i < 4; i++) {
+			podashaSignalaZ(multiScorostZ);
+			for (int i = 0; i < multiStepsZ; i++) {
 				popravka_z--;
-				podashaSignalaZ(scorost);
+				podashaSignalaZ(multiScorostZ);
 			}
 			break;
 		case OPUSTIT_INSRUMENT:
@@ -156,7 +171,7 @@ class Dvijenie {
 				popravka_z++;
 			podashaSignalaZ(scorost);
 
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < multiStepsZ; i++) {
 				popravka_z++;
 				podashaSignalaZ(scorost);
 			}
@@ -221,6 +236,8 @@ class Dvijenie {
 				}
 			izmenenieNapravleniaDvigeniaZ = false;
 			break;
+		default:
+			throw new RuntimeException("Incorrect using of luft correcting logic");
 		}
 	}
 
@@ -229,15 +246,16 @@ class Dvijenie {
 		sleepNano(scorost * 10000);
 		// if (pozitsia_z) System.out.println("x="+pozitsia_x+" y="+pozitsia_y+"
 		// z="+pozitsia_z);
-		lptWork.write(pPort.portAddress,
-				(byte) (vverhVnuzY[(pozitsia_y + popravka_y) % 4] + vlevoVpravoX[(pozitsia_x + popravka_x) % 4]));
+		lptWork.write(pPort.portAddress, (byte) (vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length]
+				+ vlevoVpravoX[(pozitsia_x + popravka_x) % vlevoVpravoX.length]));
 
 	}
 
 	// Команда на порт для мотору, що переміщює інструмент
 	private void podashaSignalaZ(int scorost) {
-		sleepNano(scorost * 5000);
-		lptWork.write((short) (pPort.portAddress + 2), (byte) (vverhVnuzZ[(pozitsia_z + popravka_z) % 8]));
+		sleepNano(scorost * 10000);
+		lptWork.write((short) (pPort.portAddress + 2),
+				(byte) (vverhVnuzZ[(pozitsia_z + popravka_z) % vverhVnuzZ.length]));
 
 	}
 
@@ -348,7 +366,8 @@ class Dvijenie {
 		return pressedBite != Integer.highestOneBit(lptWork.read((short) (pPort.portAddress + 1)));
 	}
 
-	// Виконуються зсуви по Z в залежності від кривизни (проміряних радіусів) яйця
+	// Виконуються зсуви по Z в залежності від кривизни (проміряних радіусів)
+	// яйця
 	private abstract class PopravkaKruviznuPoZ implements Runnable {
 		private boolean popravkaKruviznuPoZ;
 		private boolean uvilishenieY;

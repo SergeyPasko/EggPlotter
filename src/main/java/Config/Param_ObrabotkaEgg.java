@@ -13,7 +13,7 @@ public class Param_ObrabotkaEgg {
     private static Param_ObrabotkaEgg instance;
     private ResourceBundle resourceBundle;
     //класс извлекает информацию из файла messages. properties
-    private static final String BUNDLE_NAME = "ObrabotkaEgg";
+    private static final String BUNDLE_NAME = "ObrabotkaEgg" + Param_Profile.getFileAppender();
     public static final String VUSOTA_ELEMENTA = "VUSOTA_ELEMENTA";
     public static final String VUSOTA_OKNA = "VUSOTA_OKNA";
     public static final String SHIRINA_OKNA = "SHIRINA_OKNA";

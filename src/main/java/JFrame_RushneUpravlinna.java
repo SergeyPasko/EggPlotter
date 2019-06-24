@@ -82,15 +82,18 @@ class JFrame_RushneUpravlinna extends JFrame {
 
     private JButton addButton(final String iconFileName, final String msg, double razmerX,
                               double razmerY, final double pozitsiaX, final double pozitsiaY) {
-        JButton jButton = null;
+        JButton jButton = new JButton();
         try {
-            Image img = ImageIO.read(new File(iconFileName));
-
-            if (img.getWidth(null) >= img.getHeight(null))
+        	File fpng = new File(iconFileName);
+			if (!fpng.exists())
+				fpng = new File("src/main/resources/" + iconFileName);
+			Image img = ImageIO.read(fpng);
+			
+			if (img.getWidth(null) >= img.getHeight(null))
                 img = img.getScaledInstance(storonaElementa, storonaElementa * img.getHeight(null) / img.getWidth(null), 15);
             else
                 img = img.getScaledInstance(storonaElementa * img.getWidth(null) / img.getHeight(null), storonaElementa, 15);
-            jButton = new JButton(new ImageIcon(img));
+            jButton .setIcon(new ImageIcon(img));
         } catch (IOException ignored) {
         }
         jButton.setToolTipText(msg);
@@ -161,7 +164,10 @@ class JFrame_RushneUpravlinna extends JFrame {
                         zapusk.dvijenie.dvijenieNaOdinHag(napravlenie_dvigenia, false, zapusk.dvijenie.scorostPerehoda);
                         if (zapusk.dvijenie.nowKontact())
                             try {
-                                jlabel_contact.setIcon(new ImageIcon(ImageIO.read(new File("Icons/Kontact.png"))));
+                            	File fpng = new File("Icons/Kontact.png");
+                    			if (!fpng.exists())
+                    				fpng = new File("src/main/resources/Icons/Kontact.png");                 			
+                                jlabel_contact.setIcon(new ImageIcon(ImageIO.read(fpng)));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

@@ -918,9 +918,15 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void loadObrobkaFromFile() {
         try {
+        	File fpng = new File("tmpSave/ObrabkaSettings.res");
+			if (!fpng.exists())
+				fpng = new File("src/main/resources/tmpSave/ObrabkaSettings.res");			
             RandomAccessFile rf =
-                    new RandomAccessFile("tmpSave\\ObrabkaSettings.res", "rw");
-            File imgFile = new File("tmpSave\\imgFile.bmp");
+                    new RandomAccessFile(fpng, "rw");
+            File imgFile = new File("tmpSave/imgFile.bmp");
+			if (!imgFile.exists())
+				imgFile = new File("src/main/resources/tmpSave/imgFile.bmp");			
+     
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {
