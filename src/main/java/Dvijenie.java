@@ -21,7 +21,7 @@ class Dvijenie {
 	int scorostPerehoda = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.SCOROSTPEREHODA);
 	int vusotaPodjomaNashalna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.VUSOTAPODJOMANASHALNA);
 	int cmechenieNashalneY = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.SMESHENIENASHALNE);
-	int komandNaPovorot = 1600;
+	int komandNaPovorot = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.HAGOVNAPOVOROT);
 	private int vverhVnuzY[] = { 1, 4, 2, 8 };
 	private int vlevoVpravoX[] = { 128, 32, 64, 16 };
 	private int vverhVnuzZ[] = { 15, 14, 10, 8, 9, 1, 3, 7 };
@@ -56,7 +56,7 @@ class Dvijenie {
 		if (Param_Profile.isSecondGeneration()) {
 			vlevoVpravoX = new int[] { 1, 3, 2, 6, 4, 12, 8, 9 };
 			vverhVnuzY = new int[] { 128, 160, 32, 96, 64, 80, 16, 144 };
-			vverhVnuzZ = new int[] { 15, 14, 10, 2, 3, 1, 9, 13 };
+			vverhVnuzZ = new int[] { 13, 9, 1, 3, 2, 10, 14, 15 };
 		}
 	}
 

@@ -1,6 +1,8 @@
+import Config.Param_Dvijenie;
 import Config.Param_ObrabotkaEgg;
 import drawPanels.Draw_ObrablayemaiyKartinka;
 import drawPanels.Draw_VusotaInstrumenta;
+import utils.FileUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,7 +31,7 @@ class JFrame_ObrobkaEgg extends JFrame {
     JPanel mainPanel;
     JPanel jpanelKnopki;
     int vusotaOkna = Param_ObrabotkaEgg.getInstance().getProperty(Param_ObrabotkaEgg.VUSOTA_OKNA);
-    int shirinaOkna = Param_ObrabotkaEgg.getInstance().getProperty(Param_ObrabotkaEgg.SHIRINA_OKNA) + 20;
+    int shirinaOkna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.HAGOVNAPOVOROT)/2;
     int vusotaElementa = Param_ObrabotkaEgg.getInstance().getProperty(Param_ObrabotkaEgg.VUSOTA_ELEMENTA);
 
     JLabel jlabel_podpisScorostObrabotki;
@@ -97,8 +99,8 @@ class JFrame_ObrobkaEgg extends JFrame {
         //Основне вікно
         mainPanel = (JPanel) this.getContentPane();
         mainPanel.setLayout(null);
-        this.setSize(new Dimension(shirinaOkna+20, vusotaOkna));
-        mainPanel.setSize(new Dimension(shirinaOkna+20, vusotaOkna));
+        this.setSize(new Dimension(shirinaOkna+40, vusotaOkna));
+        mainPanel.setSize(new Dimension(shirinaOkna+40, vusotaOkna));
         this.setTitle("Сферичний плоттер V2, Обробка поверхні");
         this.setResizable(false);
 
@@ -113,12 +115,12 @@ class JFrame_ObrobkaEgg extends JFrame {
         draw_vusotaInstrumenta = new Draw_VusotaInstrumenta();
         draw_vusotaInstrumenta.setLayout(null);
         draw_vusotaInstrumenta.setSize(20, vusotaOkna - vusotaElementa * 9 - 30);
-        draw_vusotaInstrumenta.setLocation(shirinaOkna - 20, 0);
+        draw_vusotaInstrumenta.setLocation(shirinaOkna, 0);
         mainPanel.add(draw_vusotaInstrumenta);
         draw_vusotaInstrumenta.repaint();
 
         jpanelKnopki = new JPanel(null);
-        jpanelKnopki.setSize(new Dimension(shirinaOkna, vusotaElementa * 9));
+        jpanelKnopki.setSize(new Dimension(shirinaOkna+20, vusotaElementa * 9));
         jpanelKnopki.setLocation(0, draw_obrablayemaiyKartinka.getHeight());
         mainPanel.add(jpanelKnopki);
 
@@ -388,14 +390,14 @@ class JFrame_ObrobkaEgg extends JFrame {
     public void setSizeFrame() {
         vusotaOkna = zapusk.snatieRazmerov.razmerZagotovki / 10 * 5 +
                 jpanelKnopki.getHeight() + 30;
-        this.setSize(new Dimension(shirinaOkna, vusotaOkna));
-        mainPanel.setSize(new Dimension(shirinaOkna, vusotaOkna));
-        draw_obrablayemaiyKartinka.setSize(shirinaOkna - 20, zapusk.snatieRazmerov.razmerZagotovki / 10 * 5);
+        this.setSize(new Dimension(shirinaOkna+20, vusotaOkna));
+        this.setMinimumSize(new Dimension(shirinaOkna+20, vusotaOkna));
+        mainPanel.setSize(new Dimension(shirinaOkna+20, vusotaOkna));
+        draw_obrablayemaiyKartinka.setSize(shirinaOkna, zapusk.snatieRazmerov.razmerZagotovki / 10 * 5);
         draw_vusotaInstrumenta.setSize(20, zapusk.snatieRazmerov.razmerZagotovki / 10 * 5);
         draw_vusotaInstrumenta.setHeight(zapusk.snatieRazmerov.razmerZagotovki / 10 * 5);
         jpanelKnopki.setLocation(0, draw_obrablayemaiyKartinka.getHeight());
         this.setLocationRelativeTo(null);
-
     }
 
     private void blokirovkaKlavishPriObraabotki() {
@@ -892,9 +894,9 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void saveObrobkaToFile(boolean ProcessFinished) {
         try {
-            RandomAccessFile rf =
-                    new RandomAccessFile("tmpSave\\ObrabkaSettings.res", "rw");
-            File imgFile = new File("tmpSave\\imgFile.bmp");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
+
+            File imgFile = FileUtils.getFile("tmpSave\\imgFile.bmp");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_scorostObrabotki.getValue());
                 rf.writeInt(jscrollbar_tonalnist.getValue());
@@ -918,15 +920,9 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void loadObrobkaFromFile() {
         try {
-        	File fpng = new File("tmpSave/ObrabkaSettings.res");
-			if (!fpng.exists())
-				fpng = new File("src/main/resources/tmpSave/ObrabkaSettings.res");			
-            RandomAccessFile rf =
-                    new RandomAccessFile(fpng, "rw");
-            File imgFile = new File("tmpSave/imgFile.bmp");
-			if (!imgFile.exists())
-				imgFile = new File("src/main/resources/tmpSave/imgFile.bmp");			
-     
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
+            File imgFile = FileUtils.getFile("tmpSave/imgFile.bmp");
+           
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {

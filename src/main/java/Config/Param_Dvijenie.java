@@ -22,6 +22,9 @@ public class Param_Dvijenie {
 	public static final String HAGOVVOTSSHETEPOPRAVKAZ = "HAGOVVOTSSHETEPOPRAVKAZ";
 	public static final String SMESHENIENASHALNE = "SMESHENIENASHALNE";
 
+	public static final String HAGOVNAPOVOROT = "HAGOVNAPOVOROT";
+
+	
 	public static Param_Dvijenie getInstance() {
 		if (instance == null) {
 			instance = new Param_Dvijenie();

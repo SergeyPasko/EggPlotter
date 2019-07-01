@@ -1,16 +1,30 @@
-import Config.Param_SnatieRazmerov;
-import drawPanels.Draw_SnatieRazmerov;
+import static java.awt.Scrollbar.HORIZONTAL;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import static java.awt.Scrollbar.HORIZONTAL;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
+import javax.swing.JToggleButton;
+
+import Config.Param_Profile;
+import Config.Param_SnatieRazmerov;
+import drawPanels.Draw_SnatieRazmerov;
+import utils.FileUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,7 +35,8 @@ import static java.awt.Scrollbar.HORIZONTAL;
  */
 class JFrame_SnatieRazmerov extends JFrame {
 
-    //Параметри та елементи выкна вимірів
+	private static final long serialVersionUID = 1L;
+	//Параметри та елементи выкна вимірів
     JPanel mainPanel;
     int polosaOgranishenia = Param_SnatieRazmerov.getInstance().getProperty(Param_SnatieRazmerov.POLOSA_OGRANISHENIA);
     int vusotaElementa = Param_SnatieRazmerov.getInstance().getProperty(Param_SnatieRazmerov.VUSOTA_ELEMENTA);
@@ -50,6 +65,16 @@ class JFrame_SnatieRazmerov extends JFrame {
     boolean nowDoing = false;
     boolean canResiveImage = false;
     int razrez[];
+    
+    static int koefValue;
+    
+    static{
+    	if (Param_Profile.isSecondGeneration()){
+    		koefValue=12;
+    	} else{
+    		koefValue=10;
+    	}
+    }
 
     public JFrame_SnatieRazmerov(Zapusk zapusk) {
         this.zapusk = zapusk;
@@ -84,8 +109,8 @@ class JFrame_SnatieRazmerov extends JFrame {
         jscrollbar_shirinaZagotovki.addAdjustmentListener(new AdjustmentListener() {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
                 jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() + " мм");
-                drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * 10 - 2 * polosaOgranishenia * 10)) / 2 - 4, 0);
-                razmerZagotovki = jscrollbar_shirinaZagotovki.getValue() * 10 - 2 * polosaOgranishenia * 10 + 1;
+                drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue)) / 2 - 4, 0);
+                razmerZagotovki = jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue + 1;
                 drawPanel.setSize(razmerZagotovki, vusotaOkna - 6 * vusotaElementa - 30);
                 pomeraniRazmeru = new int[razmerZagotovki][6];
                 drawPanel.massivKoordinat = new int[razmerZagotovki][5];
@@ -93,7 +118,7 @@ class JFrame_SnatieRazmerov extends JFrame {
                 jbutton_zminutuImg.setEnabled(false);
             }
         });
-        razmerZagotovki = 10 * jscrollbar_shirinaZagotovki.getValue() - 2 * polosaOgranishenia * 10 + 1;
+        razmerZagotovki = koefValue * jscrollbar_shirinaZagotovki.getValue() - 2 * polosaOgranishenia * koefValue + 1;
         mainPanel.add(jscrollbar_shirinaZagotovki);
 
         jscrollBar_chustvitelnostVumiruvanna = new JScrollBar(HORIZONTAL, 3, 1, 3, 11);
@@ -258,9 +283,9 @@ class JFrame_SnatieRazmerov extends JFrame {
 
         drawPanel = new Draw_SnatieRazmerov();
         drawPanel.setLayout(null);
-        drawPanel.setSize(jscrollbar_shirinaZagotovki.getValue() * 10 - 2 * polosaOgranishenia * 10,
+        drawPanel.setSize(jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue,
                 vusotaOkna - 6 * vusotaElementa - 30);
-        drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * 10 - 2 * polosaOgranishenia * 10)) / 2 - 4, 0);
+        drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue)) / 2 - 4, 0);
         mainPanel.add(drawPanel);
         drawPanel.repaint();
     }
@@ -290,7 +315,7 @@ class JFrame_SnatieRazmerov extends JFrame {
                 jprogressbar_vumiruvanna.setEnabled(true);
 
                 zapusk.dvijenie.goTo(zapusk.dvijenie.pozitsia_x, (zapusk.dvijenie.pozitsia_y - zapusk.dvijenie.cmechenieNashalneY
-                        - polosaOgranishenia * 10 + jscrollbar_shirinaZagotovki.getValue() * 10),
+                        - polosaOgranishenia * koefValue + jscrollbar_shirinaZagotovki.getValue() * koefValue),
                         (zapusk.dvijenie.pozitsia_z - zapusk.dvijenie.vusotaPodjomaNashalna), zapusk.dvijenie.scorostPerehoda, false);
                 jbutton_pausaVumiru.setEnabled(true);
                 jbutton_stopVumiru.setEnabled(true);
@@ -379,13 +404,12 @@ class JFrame_SnatieRazmerov extends JFrame {
     //Реакція на закриття вікна або нажимання кнопки "Стоп"
     private void perervatuObrobku(final boolean exit, boolean konethObrabotki) {
         //Вікно переривання/виходу
-        JOptionPane joptionpane_vuhodIzProgramu = new JOptionPane();
 
         if (konethObrabotki) nowDoing = !nowDoing;
         if (!nowDoing) jbutton_pausaVumiru.doClick();
         int pressed;
         if (konethObrabotki) pressed = 0;
-        else pressed = joptionpane_vuhodIzProgramu.showOptionDialog(null, "Ви дійсно бажаєте перервати обробку?",
+        else pressed = JOptionPane.showOptionDialog(null, "Ви дійсно бажаєте перервати обробку?",
                 "Вихід/переривання обробки", JOptionPane.OK_CANCEL_OPTION, 0, null, new String[]{"Так", "Ні"}, "Ні");
         if (pressed == 0) {
             jbutton_stopVumiru.setEnabled(false);
@@ -446,44 +470,9 @@ class JFrame_SnatieRazmerov extends JFrame {
         drawPanel.repaint();
     }
 
-    //Обчислення радіуса та сдвигів предмету вимірювання
-    private void obshislenieParametrov(int hag) {
-        int a, b, c, d = 0, r, x, alfa;
-        int[] massivRadius = new int[pomeraniRazmeru.length];
-        // d>c
-        // b>a
-        // a на одной прямой b
-        // c на одной прямой d
-        int nomerMax = 0;
-        for (int i = 0; i < 4; i++) {
-            if (pomeraniRazmeru[hag][i] > d) {
-                d = pomeraniRazmeru[hag][i];
-                nomerMax = i;
-            }
-        }
-        c = pomeraniRazmeru[hag][(nomerMax + 2) % 4];
-        if (pomeraniRazmeru[hag][(nomerMax + 1) % 4] > pomeraniRazmeru[hag][(nomerMax + 3) % 4]) {
-            b = pomeraniRazmeru[hag][(nomerMax + 1) % 4];
-            a = pomeraniRazmeru[hag][(nomerMax + 3) % 4];
-        } else {
-            a = pomeraniRazmeru[hag][(nomerMax + 1) % 4];
-            b = pomeraniRazmeru[hag][(nomerMax + 3) % 4];
-        }
-        r = (int) Math.sqrt(((c * c + b * b) / 2 / a) * ((d * d + b * b) / 2 / a));
-        x = (int) Math.sqrt(r * r - a * b);
-        if (x != 0)
-            alfa = (int) (10 * Math.acos((double) (x * x + d * d - r * r) / (double) (2 * x * d * d)) / (2 * Math.PI) * 360);
-        else alfa = 0;
-        massivRadius[hag] = r;
-        pomeraniRazmeru[hag][4] = massivRadius[hag];
-        drawPanel.massivKoordinat[hag][4] = pomeraniRazmeru[hag][4];
-        pomeraniRazmeru[hag][5] = alfa;
-    }
-
     synchronized private void saveRazrezToFile(boolean ProcessFinished) {
         try {
-            RandomAccessFile rf =
-                    new RandomAccessFile("tmpSave\\Razrez.res", "rw");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_shirinaZagotovki.getValue());
             } else {
@@ -496,7 +485,7 @@ class JFrame_SnatieRazmerov extends JFrame {
                     rf.writeInt(drawPanel.massivKoordinat[i][j]);
                 }
 
-            rf = new RandomAccessFile("tmpSave\\ObrabkaSettings.res", "rw");
+            rf =  FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
             rf.writeInt(0);
             rf.close();
 
@@ -507,23 +496,18 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void loadRazrezFromFile() {
         try {
-        	File fpng = new File("tmpSave/Razrez.res");
-			if (!fpng.exists())
-				fpng = new File("src/main/resources/tmpSave/Razrez.res");			
-            RandomAccessFile rf =
-                    new RandomAccessFile(fpng, "rw");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {
                 rf.seek(0);
                 jscrollbar_shirinaZagotovki.setValue(rf.readInt());
             }
-            razmerZagotovki = 10 * jscrollbar_shirinaZagotovki.getValue() - 2 * polosaOgranishenia * 10 + 1;
+            razmerZagotovki = koefValue * jscrollbar_shirinaZagotovki.getValue() - 2 * polosaOgranishenia * koefValue + 1;
             razrez = new int[razmerZagotovki];
             drawPanel.massivKoordinat = new int[razmerZagotovki][5];
             for (int j = 0; j < 5; j++)
                 for (int i = 0; i < razmerZagotovki; i++) {
-                    //rf.seek(4*(1+i +j*razmerZagotovki));
                     drawPanel.massivKoordinat[i][j] = rf.readInt();
                     pomeraniRazmeru[i][j] = drawPanel.massivKoordinat[i][j];
                     if (j == 4) razrez[i] = pomeraniRazmeru[i][4];

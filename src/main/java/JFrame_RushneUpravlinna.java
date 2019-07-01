@@ -1,4 +1,5 @@
 import Config.Param_RushneUpravlinna;
+import utils.FileUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,7 +19,8 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 class JFrame_RushneUpravlinna extends JFrame {
-    //Параметри та елементи вікна ручного керування
+	private static final long serialVersionUID = 1L;
+	//Параметри та елементи вікна ручного керування
     private Zapusk zapusk;
     JPanel mainPanel;
     JLabel jlabel_contact;
@@ -69,7 +71,7 @@ class JFrame_RushneUpravlinna extends JFrame {
         jlabel_contact.setLocation(storonaElementa, mainPanel.getHeight() - 30 -
                 storonaElementa * 2);
         if (zapusk.dvijenie.nowKontact())
-            jlabel_contact.setIcon(new ImageIcon(ImageIO.read(new File("Icons/Kontact.png"))));
+            jlabel_contact.setIcon(new ImageIcon(ImageIO.read(FileUtils.getFile("Icons/Kontact.png"))));
         else jlabel_contact.setIcon(null);
         mainPanel.add(jlabel_contact);
     }
@@ -84,9 +86,7 @@ class JFrame_RushneUpravlinna extends JFrame {
                               double razmerY, final double pozitsiaX, final double pozitsiaY) {
         JButton jButton = new JButton();
         try {
-        	File fpng = new File(iconFileName);
-			if (!fpng.exists())
-				fpng = new File("src/main/resources/" + iconFileName);
+        	File fpng = FileUtils.getFile(iconFileName);
 			Image img = ImageIO.read(fpng);
 			
 			if (img.getWidth(null) >= img.getHeight(null))
@@ -161,12 +161,10 @@ class JFrame_RushneUpravlinna extends JFrame {
             public void run() {
                 while (true) {
                     if (nowPressed) {
-                        zapusk.dvijenie.dvijenieNaOdinHag(napravlenie_dvigenia, false, zapusk.dvijenie.scorostPerehoda);
+                        zapusk.dvijenie.dvijenieNaOdinHag(napravlenie_dvigenia, false, zapusk.dvijenie.scorostPerehoda*2);
                         if (zapusk.dvijenie.nowKontact())
                             try {
-                            	File fpng = new File("Icons/Kontact.png");
-                    			if (!fpng.exists())
-                    				fpng = new File("src/main/resources/Icons/Kontact.png");                 			
+                            	File fpng = FileUtils.getFile("Icons/Kontact.png");
                                 jlabel_contact.setIcon(new ImageIcon(ImageIO.read(fpng)));
                             } catch (IOException e) {
                                 e.printStackTrace();

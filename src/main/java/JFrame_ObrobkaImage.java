@@ -1,3 +1,4 @@
+import Config.Param_Dvijenie;
 import Config.Param_ObrabotkaImage;
 import drawPanels.Draw_ModifyImg;
 import drawPanels.Draw_RazrezEgg;
@@ -36,7 +37,7 @@ public class JFrame_ObrobkaImage extends JFrame {
     JPanel mainPanel;
     JPanel jpanelKnopki;
     int vusotaOkna = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.VUSOTA_OKNA);
-    int shirinaOkna = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.SHIRINA_OKNA_GRAFIC) +
+    int shirinaOkna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.HAGOVNAPOVOROT)/2 +
             Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.SHIRINA_OKNA_RAZREZ);
     int vusotaElementa = Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.VUSOTA_ELEMENTA);
     JLabel jlabel_podpisTonalnist;
@@ -183,8 +184,6 @@ public class JFrame_ObrobkaImage extends JFrame {
                 new Yasheiki(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new LineToPoints(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
                 new Krestiki(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
-                new GeometriaRavnomerno(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
-                new Geometria(jpanelKnopki.getWidth(), jpanelKnopki.getHeight() - 2 * vusotaElementa, razrez, draw_modifyImg),
         };
         for (UpgradeImg ui : upgradeImg) {
             jTabbedPane_variantuImg.add(ui.getNameTabletPane(), ui);
@@ -215,6 +214,7 @@ public class JFrame_ObrobkaImage extends JFrame {
         vusotaOkna = razrez.length +
                 jpanelKnopki.getHeight() + 45;
         this.setSize(new Dimension(shirinaOkna, vusotaOkna));
+        this.setMinimumSize(new Dimension(shirinaOkna, vusotaOkna));
         mainPanel.setSize(new Dimension(shirinaOkna, vusotaOkna));
         draw_modifyImg.setSize(shirinaOkna - Param_ObrabotkaImage.getInstance().getProperty(Param_ObrabotkaImage.SHIRINA_OKNA_RAZREZ),
                 razrez.length);

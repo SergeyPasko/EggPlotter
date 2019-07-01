@@ -18,7 +18,9 @@ import java.awt.image.MemoryImageSource;
  * To change this template use File | Settings | File Templates.
  */
 public class Globys extends UpgradeImg {
-    private JCheckBox jCheckBox_simetria = new JCheckBox("Симетрія (відстань між точками по X та Y однакова)");
+	private static final long serialVersionUID = 1L;
+	
+	private JCheckBox jCheckBox_simetria = new JCheckBox("Симетрія (відстань між точками по X та Y однакова)");
     private JScrollBar jScrollBar_shirinaPeremushkiX;
     private JScrollBar jScrollBar_shirinaPeremushkiY;
     private JScrollBar jScrollBar_kolishetstvoSectorovX;
