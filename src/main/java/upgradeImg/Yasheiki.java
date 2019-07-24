@@ -1,5 +1,6 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -64,10 +65,10 @@ public class Yasheiki extends UpgradeImg {
                             sravnenieSveta(imgStart, tmpPoint.x, tmpPoint.y, 0, -1, 255 * 3) ||
                             sravnenieSveta(imgStart, tmpPoint.x, tmpPoint.y, -1, 0, 255 * 3))) {
                 original = true;
-                for (int q = -jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2;
-                     q <= jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2; q++) {
-                    for (int w = -jScrollBar_shilnistY.getValue() / 2;
-                         w <= jScrollBar_shilnistY.getValue() / 2; w++) {
+                for (int q = -getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2;
+                     q <= getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2; q++) {
+                    for (int w = -getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20;
+                         w <= getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20; w++) {
                         if (sravnenieSveta(imgTemp, tmpPoint.x, tmpPoint.y, q, w, 100)) {
                             original = false;
                             break;
@@ -90,13 +91,13 @@ public class Yasheiki extends UpgradeImg {
             tmpPoint = new Point(random.nextInt(imgShirina), random.nextInt(imgVusota));
 
 
-            if (imgStart[imgShirina * tmpPoint.y + tmpPoint.x] == 0Xff000000 && (i % jScrollBar_shilnistX.getValue() == 0)) {
+            if (imgStart[imgShirina * tmpPoint.y + tmpPoint.x] == 0Xff000000 && (i % getMashtabedValueX(jScrollBar_shilnistX.getValue()) == 0)) {
                 original = true;
 
-                for (int q = -jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2;
-                     q <= jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2; q++) {
-                    for (int w = -jScrollBar_shilnistY.getValue() / 2;
-                         w <= jScrollBar_shilnistY.getValue() / 2; w++) {
+                for (int q = -getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2;
+                     q <= getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2; q++) {
+                    for (int w = -getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20;
+                         w <= getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20; w++) {
                         if (sravnenieSveta(imgTemp, tmpPoint.x, tmpPoint.y, q, w, 100)) {
                             original = false;
                         }
@@ -146,7 +147,7 @@ public class Yasheiki extends UpgradeImg {
                 }
             }
         }
-        int sizeRadius=jScrollBar_tovshinaPeremusok.getValue()/2-1;
+        int sizeRadius=getMashtabedValueX(jScrollBar_tovshinaPeremusok.getValue())/20-1;
         for (int j = 0; j < imgTempPopravka.length; j++) {
             if (imgTempPopravka[j] != Color.YELLOW.getRGB()) continue;
             int x = j % imgShirina;
@@ -179,15 +180,15 @@ public class Yasheiki extends UpgradeImg {
             }
         });
         add(jCheckBox_simetria);
-        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 40, 1, 30, 61);
+        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 400, 10, 300, 610);
         jScrollBar_shilnistX.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistX = new JLabel();
         super.setScrollBar(new JLabel("Відстань між центрами по X"), jScrollBar_shilnistX, jLabel_shilnistX, 1);
-        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 40, 1, 30, 61);
+        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 400, 10, 300, 610);
         jScrollBar_shilnistY.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistY = new JLabel();
         super.setScrollBar(new JLabel("Відстань між центрами по Y"), jScrollBar_shilnistY, jLabel_shilnistY, 2);
-        jScrollBar_tovshinaPeremusok = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 6, 31);
+        jScrollBar_tovshinaPeremusok = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 60, 310);
         jScrollBar_tovshinaPeremusok.addAdjustmentListener(myAdjusmentListener);
         jLabel_tovshinaPeremusok = new JLabel();
         super.setScrollBar(new JLabel("Товщина перемичок"), jScrollBar_tovshinaPeremusok, jLabel_tovshinaPeremusok, 3);
@@ -197,9 +198,9 @@ public class Yasheiki extends UpgradeImg {
     }
 
     private void writeLabelText() {
-        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 5 + " мм");
-        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 5 + " мм");
-        jLabel_tovshinaPeremusok.setText((double) jScrollBar_tovshinaPeremusok.getValue() / 5 + " мм");
+        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 50 + " мм");
+        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 50 + " мм");
+        jLabel_tovshinaPeremusok.setText((double) jScrollBar_tovshinaPeremusok.getValue() / 50 + " мм");
     }
 
     private class MyAdjusmentListener implements AdjustmentListener {

@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -63,8 +65,8 @@ public class Ravnomerno extends UpgradeImg {
             i++;
             points.add(new Point((new Random()).nextInt(imgShirina),(new Random()).nextInt(imgVusota)));
         }  */
-        for (int i = (int)(jScrollBar_zmishennaX.getValue()* (double)imgShirina / (Math.PI * getMaxRazrez(razrez))); i < imgShirina; i += (int)(jScrollBar_shilnistX.getValue() * (double)imgShirina / (Math.PI * getMaxRazrez(razrez)))) {
-            for (int j = jScrollBar_zmishennaY.getValue(); j < imgVusota; j += jScrollBar_shilnistY.getValue()) {
+        for (int i = (int)(getMashtabedValueX(jScrollBar_zmishennaX.getValue())/10* (double)imgShirina / (Math.PI * getMaxRazrez(razrez))); i < imgShirina; i += (int)(getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * (double)imgShirina / (Math.PI * getMaxRazrez(razrez)))) {
+            for (int j = getMashtabedValueY(jScrollBar_zmishennaY.getValue())/10; j < imgVusota; j += getMashtabedValueY(jScrollBar_shilnistY.getValue())/10) {
                 Point tmpPoint = new Point(i, j);
                 if (imgStart[imgShirina * tmpPoint.y + tmpPoint.x] == 0Xff000000)
                     points.add(tmpPoint);
@@ -89,19 +91,19 @@ public class Ravnomerno extends UpgradeImg {
             }
         });
         add(jCheckBox_simetria);
-        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 20, 1, 15, 41);
+        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 200, 10, 150, 410);
         jScrollBar_shilnistX.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistX = new JLabel();
         super.setScrollBar(new JLabel("Відстань між точками по X"), jScrollBar_shilnistX, jLabel_shilnistX, 1);
-        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 20, 1, 15, 41);
+        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 200, 10, 150, 410);
         jScrollBar_shilnistY.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistY = new JLabel();
         super.setScrollBar(new JLabel("Відстань між точками по Y"), jScrollBar_shilnistY, jLabel_shilnistY, 2);
-        jScrollBar_zmishennaX = new JScrollBar(Adjustable.HORIZONTAL, 0, 1, 0, 41);
+        jScrollBar_zmishennaX = new JScrollBar(Adjustable.HORIZONTAL, 0, 10, 0, 410);
         jScrollBar_zmishennaX.addAdjustmentListener(myAdjusmentListener);
         jLabel_zmishennaX = new JLabel();
         super.setScrollBar(new JLabel("Початкове зміщення по X"), jScrollBar_zmishennaX, jLabel_zmishennaX, 3);
-        jScrollBar_zmishennaY = new JScrollBar(Adjustable.HORIZONTAL, 0, 1, 0, 41);
+        jScrollBar_zmishennaY = new JScrollBar(Adjustable.HORIZONTAL, 0, 10, 0, 410);
         jScrollBar_zmishennaY.addAdjustmentListener(myAdjusmentListener);
         jLabel_zmishennaY = new JLabel();
         super.setScrollBar(new JLabel("Початкове зміщення по Y"), jScrollBar_zmishennaY, jLabel_zmishennaY, 4);
@@ -110,10 +112,10 @@ public class Ravnomerno extends UpgradeImg {
     }
 
     private void writeLabelText() {
-        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 5 + " мм");
-        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 5 + " мм");
-        jLabel_zmishennaX.setText((double) jScrollBar_zmishennaX.getValue() / 5 + " мм");
-        jLabel_zmishennaY.setText((double) jScrollBar_zmishennaY.getValue() / 5 + " мм");
+        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 50 + " мм");
+        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 50 + " мм");
+        jLabel_zmishennaX.setText((double) jScrollBar_zmishennaX.getValue() / 50 + " мм");
+        jLabel_zmishennaY.setText((double) jScrollBar_zmishennaY.getValue() / 50 + " мм");
     }
 
     private class MyAdjusmentListener implements AdjustmentListener {

@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -44,9 +46,9 @@ public class Setka extends UpgradeImg {
         int[] imgTemp = imgStart.clone();
         int y;
         int x;
-        int xSec = (imgShirina - jScrollBar_shirinaPeremushkiX.getValue() * jScrollBar_kolishetstvoSectorovX.getValue())
+        int xSec = (imgShirina - getMashtabedValueX(jScrollBar_shirinaPeremushkiX.getValue())/10 * jScrollBar_kolishetstvoSectorovX.getValue())
                 / jScrollBar_kolishetstvoSectorovX.getValue();
-        int ySec = (imgVusota - jScrollBar_shirinaPeremushkiY.getValue() * (jScrollBar_kolishetstvoSectorovY.getValue() - 1))
+        int ySec = (imgVusota - getMashtabedValueY(jScrollBar_shirinaPeremushkiY.getValue())/10 * (jScrollBar_kolishetstvoSectorovY.getValue() - 1))
                 / jScrollBar_kolishetstvoSectorovY.getValue();
         int maxRazrez = getMaxRazrez(razrez);
         outer:
@@ -56,11 +58,11 @@ public class Setka extends UpgradeImg {
             for (int k = 1; k <= jScrollBar_kolishetstvoSectorovX.getValue(); k++) {
                 if (imgStart[i] == Color.WHITE.getRGB()) continue outer;
 
-                int ySecDelta = jScrollBar_shirinaPeremushkiX.getValue() * maxRazrez / razrez[y] / 2;
-                if (x < (2 * k - 1) * jScrollBar_shirinaPeremushkiX.getValue() / 2 +
+                int ySecDelta = getMashtabedValueX(jScrollBar_shirinaPeremushkiX.getValue())/10 * maxRazrez / razrez[y] / 2;
+                if (x < (2 * k - 1) * getMashtabedValueX(jScrollBar_shirinaPeremushkiX.getValue()) / 20 +
                         ySecDelta +
                         (k - 1) * xSec &&
-                        x > ((2 * k - 1) * jScrollBar_shirinaPeremushkiX.getValue() / 2 -
+                        x > ((2 * k - 1) * getMashtabedValueX(jScrollBar_shirinaPeremushkiX.getValue()) / 20 -
                                 ySecDelta +
                                 (k-1) * xSec)) {
                     imgTemp[i] = Color.MAGENTA.getRGB();
@@ -70,8 +72,8 @@ public class Setka extends UpgradeImg {
             }
             for (int z = 1; z <= jScrollBar_kolishetstvoSectorovY.getValue(); z++) {
 
-                if (y > (z - 2) * jScrollBar_shirinaPeremushkiY.getValue() + (z - 1) * ySec &&
-                        y < ((z - 1) * jScrollBar_shirinaPeremushkiY.getValue() +
+                if (y > (z - 2) * getMashtabedValueY(jScrollBar_shirinaPeremushkiY.getValue())/10 + (z - 1) * ySec &&
+                        y < ((z - 1) * getMashtabedValueY(jScrollBar_shirinaPeremushkiY.getValue())/10 +
                                 (z-1) * ySec)) {
                     imgTemp[i] = Color.MAGENTA.getRGB();
                     continue outer;
@@ -97,11 +99,11 @@ public class Setka extends UpgradeImg {
             }
         });
         add(jCheckBox_simetria);
-        jScrollBar_shirinaPeremushkiX = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 5, 101);
+        jScrollBar_shirinaPeremushkiX = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 50, 1010);
         jScrollBar_shirinaPeremushkiX.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistX = new JLabel();
         super.setScrollBar(new JLabel("Ширина перемички по X"), jScrollBar_shirinaPeremushkiX, jLabel_shilnistX, 1);
-        jScrollBar_shirinaPeremushkiY = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 5, 101);
+        jScrollBar_shirinaPeremushkiY = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 50, 1010);
         jScrollBar_shirinaPeremushkiY.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistY = new JLabel();
         super.setScrollBar(new JLabel("Ширина переички по Y"), jScrollBar_shirinaPeremushkiY, jLabel_shilnistY, 2);
@@ -118,8 +120,8 @@ public class Setka extends UpgradeImg {
     }
 
     private void writeLabelText() {
-        jLabel_shilnistX.setText((double) (jScrollBar_shirinaPeremushkiX.getValue()) / 5 + " мм");
-        jLabel_shilnistY.setText((double) (jScrollBar_shirinaPeremushkiY.getValue()) / 5 + " мм");
+        jLabel_shilnistX.setText((double) (jScrollBar_shirinaPeremushkiX.getValue()) / 50 + " мм");
+        jLabel_shilnistY.setText((double) (jScrollBar_shirinaPeremushkiY.getValue()) / 50 + " мм");
         jLabel_zmishennaX.setText((double) (jScrollBar_kolishetstvoSectorovX.getValue()) + " сектoрів");
         jLabel_zmishennaY.setText((double) (jScrollBar_kolishetstvoSectorovY.getValue()) + " сектoрів");
     }

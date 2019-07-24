@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -9,9 +11,7 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.awt.image.MemoryImageSource;
-import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,8 +47,8 @@ public class ScaleImg extends UpgradeImg {
             Graphics2D g = scaledBI.createGraphics();
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, imgShirina, imgVusota);
-            g.drawImage(imgOriginalneZobrajenna, (jScrollBar_zmishennaX.getValue() - jScrollBar_zmishennaX.getMaximum() / 2),
-                    jScrollBar_zmishennaY.getValue() - jScrollBar_zmishennaY.getMaximum() / 2, draw_modifyImg.getWidth() * jScrollBar_mashtabX.getValue() / 100,
+            g.drawImage(imgOriginalneZobrajenna, (getMashtabedValueX(jScrollBar_zmishennaX.getValue())/10 - getMashtabedValueX(jScrollBar_zmishennaX.getMaximum()) / 20),
+            		getMashtabedValueY(jScrollBar_zmishennaY.getValue())/10 - getMashtabedValueY(jScrollBar_zmishennaY.getMaximum()) / 20, draw_modifyImg.getWidth() * jScrollBar_mashtabX.getValue() / 100,
                     draw_modifyImg.getHeight() * jScrollBar_mashtabY.getValue() / 100, null);
             g.dispose();
             imgOriginalneZobrajenna = scaledBI;
@@ -88,11 +88,11 @@ public class ScaleImg extends UpgradeImg {
         jScrollBar_mashtabY.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistY = new JLabel();
         super.setScrollBar(new JLabel("Масштабування по Y"), jScrollBar_mashtabY, jLabel_shilnistY, 2);
-        jScrollBar_zmishennaX = new JScrollBar(Adjustable.HORIZONTAL, 250, 1, 0, 501);
+        jScrollBar_zmishennaX = new JScrollBar(Adjustable.HORIZONTAL, 2500, 10, 0, 5010);
         jScrollBar_zmishennaX.addAdjustmentListener(myAdjusmentListener);
         jLabel_zmishennaX = new JLabel();
         super.setScrollBar(new JLabel("Початкове зміщення по X"), jScrollBar_zmishennaX, jLabel_zmishennaX, 3);
-        jScrollBar_zmishennaY = new JScrollBar(Adjustable.HORIZONTAL, 150, 1, 0, 301);
+        jScrollBar_zmishennaY = new JScrollBar(Adjustable.HORIZONTAL, 1500, 10, 0, 3010);
         jScrollBar_zmishennaY.addAdjustmentListener(myAdjusmentListener);
         jLabel_zmishennaY = new JLabel();
         super.setScrollBar(new JLabel("Початкове зміщення по Y"), jScrollBar_zmishennaY, jLabel_zmishennaY, 4);
@@ -103,8 +103,8 @@ public class ScaleImg extends UpgradeImg {
     private void writeLabelText() {
         jLabel_shilnistX.setText((double) jScrollBar_mashtabX.getValue() + " %");
         jLabel_shilnistY.setText((double) jScrollBar_mashtabY.getValue() + " %");
-        jLabel_zmishennaX.setText((double) (jScrollBar_zmishennaX.getValue() - jScrollBar_zmishennaX.getMaximum() / 2) / 5 + " мм");
-        jLabel_zmishennaY.setText((double) (jScrollBar_zmishennaY.getValue() - jScrollBar_zmishennaY.getMaximum() / 2) / 5 + " мм");
+        jLabel_zmishennaX.setText((double) (jScrollBar_zmishennaX.getValue() - jScrollBar_zmishennaX.getMaximum() / 2) / 50 + " мм");
+        jLabel_zmishennaY.setText((double) (jScrollBar_zmishennaY.getValue() - jScrollBar_zmishennaY.getMaximum() / 2) / 50 + " мм");
     }
 
     private class MyAdjusmentListener implements AdjustmentListener {

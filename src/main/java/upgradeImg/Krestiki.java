@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;

@@ -1,5 +1,6 @@
 import Config.Param_Dvijenie;
 import Config.Param_ObrabotkaEgg;
+import Config.Param_Profile;
 import drawPanels.Draw_ObrablayemaiyKartinka;
 import drawPanels.Draw_VusotaInstrumenta;
 import utils.FileUtils;
@@ -132,7 +133,11 @@ class JFrame_ObrobkaEgg extends JFrame {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
                 jlabel_shisloScorostObrabotki.setText(String.format("%1$.3f мм/сек",
                         (double) jscrollbar_scorostObrabotki.getValue() / 300));
-                scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();
+               if (Param_Profile.isSecondGeneration()){
+                   scorostObrabotki = 450000 / jscrollbar_scorostObrabotki.getValue();
+               } else{
+                   scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();  
+               }
             }
         });
         jpanelKnopki.add(jscrollbar_scorostObrabotki);

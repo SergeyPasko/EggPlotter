@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -36,8 +38,8 @@ public class UmenshenieLinii extends UpgradeImg {
     @Override
     public Image getSummaImg() {
         Image result=draw_modifyImg.getImg();
-        int xLine = jScrollBar_smugaX.getValue() - jScrollBar_smugaX.getMaximum() / 2;
-        int yLine = jScrollBar_smugaY.getValue() - jScrollBar_smugaY.getMaximum() / 2;
+        int xLine = getMashtabedValueX(jScrollBar_smugaX.getValue())/10 - getMashtabedValueX(jScrollBar_smugaX.getMaximum()) / 20;
+        int yLine = getMashtabedValueY(jScrollBar_smugaY.getValue())/10 - getMashtabedValueY(jScrollBar_smugaY.getMaximum()) / 20;
         if (xLine>0&&yLine>0)
             result=killColor(result,Color.MAGENTA,Color.WHITE);
         if (xLine<0&&yLine<0)
@@ -50,8 +52,8 @@ public class UmenshenieLinii extends UpgradeImg {
         int[] imgTemp = imgStart.clone();
         int y;
         int x;
-        int xLine = jScrollBar_smugaX.getValue() - jScrollBar_smugaX.getMaximum() / 2;
-        int yLine = jScrollBar_smugaY.getValue() - jScrollBar_smugaY.getMaximum() / 2;
+        int xLine = getMashtabedValueX(jScrollBar_smugaX.getValue())/10 - getMashtabedValueX(jScrollBar_smugaX.getMaximum()) / 20;
+        int yLine = getMashtabedValueY(jScrollBar_smugaY.getValue())/10 - getMashtabedValueY(jScrollBar_smugaY.getMaximum()) / 20;
         int[] imgTempPopravka = imgStart.clone();
         for (int j = 0; j < imgShirina; j++) {
             for (int k = 0; k < imgVusota; k++) {
@@ -108,11 +110,11 @@ public class UmenshenieLinii extends UpgradeImg {
             }
         });
         add(jCheckBox_simetria);
-        jScrollBar_smugaX = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 0, 21);
+        jScrollBar_smugaX = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 210);
         jScrollBar_smugaX.addAdjustmentListener(myAdjusmentListener);
         jLabel_smugaX = new JLabel();
         super.setScrollBar(new JLabel("Ширина перемички по X"), jScrollBar_smugaX, jLabel_smugaX, 1);
-        jScrollBar_smugaY = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 0, 21);
+        jScrollBar_smugaY = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 210);
         jScrollBar_smugaY.addAdjustmentListener(myAdjusmentListener);
         jLabel_smugaY = new JLabel();
         super.setScrollBar(new JLabel("Ширина переички по Y"), jScrollBar_smugaY, jLabel_smugaY, 2);
@@ -121,8 +123,8 @@ public class UmenshenieLinii extends UpgradeImg {
     }
 
     private void writeLabelText() {
-        jLabel_smugaX.setText((double) (jScrollBar_smugaX.getValue() - jScrollBar_smugaX.getMaximum() / 2) / 5 + " мм");
-        jLabel_smugaY.setText((double) (jScrollBar_smugaY.getValue() - jScrollBar_smugaY.getMaximum() / 2) / 5 + " мм");
+        jLabel_smugaX.setText((double) (jScrollBar_smugaX.getValue() - jScrollBar_smugaX.getMaximum() / 2) / 50 + " мм");
+        jLabel_smugaY.setText((double) (jScrollBar_smugaY.getValue() - jScrollBar_smugaY.getMaximum() / 2) / 50 + " мм");
 
     }
 

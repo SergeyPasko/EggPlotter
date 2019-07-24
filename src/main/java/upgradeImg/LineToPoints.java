@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import java.awt.Adjustable;
 import java.awt.Image;
 import java.awt.Point;
@@ -63,12 +65,11 @@ public class LineToPoints extends UpgradeImg {
 			for (int j = 0; j < imgShirina; j++) {
 				if (imgTemp[k * imgShirina + j] == 0Xff000000) {
 					tmpPoint = new Point(j, k);
-					int xComp = jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y];
-					for (int q = -xComp / 2; q <= xComp / 2; q++) {
-						for (int w = -jScrollBar_shilnistY.getValue() / 2; w <= jScrollBar_shilnistY.getValue()
-								/ 2; w++) {
+					int xComp = getMashtabedValueX(jScrollBar_shilnistX.getValue()) * max / razrez[tmpPoint.y]/10;
+					for (int q = -xComp ; q <= xComp ; q++) {
+						for (int w = -getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 10; w <= getMashtabedValueY(jScrollBar_shilnistY.getValue())/10; w++) {
 							int curPos = (k + w) * imgShirina + j + q;
-							if (w * w + q * q > xComp * xComp || curPos >= imgStart.length || curPos < 0)
+							if (w * w + q * q >xComp * xComp || curPos >= imgStart.length || curPos < 0)
 								continue;
 							imgTemp[curPos] = 333;
 						}
@@ -96,11 +97,11 @@ public class LineToPoints extends UpgradeImg {
 			}
 		});
 		add(jCheckBox_simetria);
-		jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 5, 31);
+		jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 50, 310);
 		jScrollBar_shilnistX.addAdjustmentListener(myAdjusmentListener);
 		jLabel_shilnistX = new JLabel();
 		super.setScrollBar(new JLabel("Відстань між точками по X"), jScrollBar_shilnistX, jLabel_shilnistX, 1);
-		jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 10, 1, 5, 31);
+		jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 50, 310);
 		jScrollBar_shilnistY.addAdjustmentListener(myAdjusmentListener);
 		jLabel_shilnistY = new JLabel();
 		super.setScrollBar(new JLabel("Відстань між точками по Y"), jScrollBar_shilnistY, jLabel_shilnistY, 2);
@@ -110,8 +111,8 @@ public class LineToPoints extends UpgradeImg {
 	}
 
 	private void writeLabelText() {
-		jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 5 + " мм");
-		jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 5 + " мм");
+		jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 50 + " мм");
+		jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 50 + " мм");
 	}
 
 	private class MyAdjusmentListener implements AdjustmentListener {

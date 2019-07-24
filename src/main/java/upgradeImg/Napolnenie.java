@@ -1,5 +1,7 @@
 package upgradeImg;
 
+import static utils.ImageProportionsUtil.*;
+
 import drawPanels.Draw_ModifyImg;
 
 import javax.swing.*;
@@ -88,10 +90,10 @@ public class Napolnenie extends UpgradeImg {
                             sravnenieSveta(imgStart, tmpPoint.x, tmpPoint.y, 0, -1, 255 * 3) ||
                             sravnenieSveta(imgStart, tmpPoint.x, tmpPoint.y, -1, 0, 255 * 3))) {
                 original = true;
-                for (int q = -jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2;
-                     q <= jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2; q++) {
-                    for (int w = -jScrollBar_shilnistY.getValue() / 2;
-                         w <= jScrollBar_shilnistY.getValue() / 2; w++) {
+                for (int q = -getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2;
+                     q <= getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2; q++) {
+                    for (int w = -getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20;
+                         w <= getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20; w++) {
                         if (sravnenieSveta(imgTemp, tmpPoint.x, tmpPoint.y, q, w, 100)) {
                             original = false;
                             break;
@@ -105,7 +107,7 @@ public class Napolnenie extends UpgradeImg {
                 }
             }
         }
-        for (int povtor = 0; povtor < Math.max(jScrollBar_shilnistY.getValue(), jScrollBar_shilnistX.getValue()); povtor++) {
+        for (int povtor = 0; povtor < Math.max(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10, getMashtabedValueX(jScrollBar_shilnistX.getValue()))/10; povtor++) {
             Point pointA = new Point();
             Point pointB = new Point();
 
@@ -128,11 +130,11 @@ public class Napolnenie extends UpgradeImg {
                 }
                 imgTemp[imgShirina * p.y + p.x] = 0;
                 outer:
-                for (int delta = -2; delta < 2 * Math.max(jScrollBar_shilnistY.getValue(), jScrollBar_shilnistX.getValue()); delta += 2) {
-                    for (int q = -(jScrollBar_shilnistX.getValue() + delta) * max / razrez[pointA.y] / 2;
-                         q <= (jScrollBar_shilnistX.getValue() + delta) * max / razrez[pointA.y] / 2; q++) {
-                        for (int w = -(jScrollBar_shilnistY.getValue() + delta) / 2;
-                             w <= (jScrollBar_shilnistY.getValue() + delta) / 2; w++) {
+                for (int delta = -2; delta < 2 * Math.max(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10, getMashtabedValueX(jScrollBar_shilnistX.getValue())/10); delta += 2) {
+                    for (int q = -(getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 + delta) * max / razrez[pointA.y] / 2;
+                         q <= (getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 + delta) * max / razrez[pointA.y] / 2; q++) {
+                        for (int w = -(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10 + delta) / 2;
+                             w <= (getMashtabedValueY(jScrollBar_shilnistY.getValue())/10 + delta) / 2; w++) {
                             if (sravnenieSveta(imgTemp, pointA.x, pointA.y, q, w, 100)) {
                                 flag = false;
                                 break outer;
@@ -164,13 +166,13 @@ public class Napolnenie extends UpgradeImg {
             tmpPoint = new Point(random.nextInt(imgShirina), random.nextInt(imgVusota));
 
 
-            if (imgStart[imgShirina * tmpPoint.y + tmpPoint.x] == 0Xff000000 && (i % jScrollBar_shilnistX.getValue() == 0)) {
+            if (imgStart[imgShirina * tmpPoint.y + tmpPoint.x] == 0Xff000000 && (i % getMashtabedValueX(jScrollBar_shilnistX.getValue()) == 0)) {
                 original = true;
 
-                for (int q = -jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2;
-                     q <= jScrollBar_shilnistX.getValue() * max / razrez[tmpPoint.y] / 2; q++) {
-                    for (int w = -jScrollBar_shilnistY.getValue() / 2;
-                         w <= jScrollBar_shilnistY.getValue() / 2; w++) {
+                for (int q = -getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2;
+                     q <= getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 * max / razrez[tmpPoint.y] / 2; q++) {
+                    for (int w = -getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20;
+                         w <= getMashtabedValueY(jScrollBar_shilnistY.getValue()) / 20; w++) {
                         if (sravnenieSveta(imgTemp, tmpPoint.x, tmpPoint.y, q, w, 100)) {
                             original = false;
                         }
@@ -188,7 +190,7 @@ public class Napolnenie extends UpgradeImg {
         Point pointB;
         Point pointC;
         Point pointD;
-        for (int povtor = 0; povtor < Math.max(jScrollBar_shilnistY.getValue(), jScrollBar_shilnistX.getValue()); povtor++) {
+        for (int povtor = 0; povtor < Math.max(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10, getMashtabedValueX(jScrollBar_shilnistX.getValue())/10); povtor++) {
             tmpPoints2 = new ArrayList<Point>();
             int logik;
             for (Point p : tmpPoints) {
@@ -199,13 +201,13 @@ public class Napolnenie extends UpgradeImg {
                 pointD = new Point(p.x, p.y - 1);
                 imgTemp[imgShirina * p.y + p.x] = 0;
                 outer:
-                for (int delta = -Math.min(jScrollBar_shilnistY.getMinimum(), jScrollBar_shilnistX.getMinimum());
-                     delta < 2*Math.max(jScrollBar_shilnistY.getValue(), jScrollBar_shilnistX.getValue()); delta += 2) {
-                    for (int q = -(jScrollBar_shilnistX.getValue() + delta) * max / razrez[p.y] / 2;
-                         q <= (jScrollBar_shilnistX.getValue() + delta) * max / razrez[p.y] / 2; q++) {
+                for (int delta = -Math.min(getMashtabedValueY(jScrollBar_shilnistY.getMinimum())/10, getMashtabedValueX(jScrollBar_shilnistX.getMinimum())/10);
+                     delta < 2*Math.max(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10, getMashtabedValueX(jScrollBar_shilnistX.getValue())/10); delta += 2) {
+                    for (int q = -(getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 + delta) * max / razrez[p.y] / 2;
+                         q <= (getMashtabedValueX(jScrollBar_shilnistX.getValue())/10 + delta) * max / razrez[p.y] / 2; q++) {
 
-                        for (int w = -(jScrollBar_shilnistY.getValue() + delta) / 2;
-                             w <= (jScrollBar_shilnistY.getValue() + delta) / 2; w++) {
+                        for (int w = -(getMashtabedValueY(jScrollBar_shilnistY.getValue())/10 + delta) / 2;
+                             w <= (getMashtabedValueY(jScrollBar_shilnistY.getValue())/10 + delta) / 2; w++) {
                             if (sravnenieSveta(imgTemp, pointA.x, pointA.y, q, w, 100) &&
                                     sravnenieSveta(imgTemp, pointB.x, pointB.y, -1, 0, 0)) {
                                 logik = 2;
@@ -281,11 +283,11 @@ public class Napolnenie extends UpgradeImg {
             }
         });
         add(jCheckBox_simetria);
-        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 15, 1, 7, 31);
+        jScrollBar_shilnistX = new JScrollBar(Adjustable.HORIZONTAL, 150, 10, 70, 310);
         jScrollBar_shilnistX.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistX = new JLabel();
         super.setScrollBar(new JLabel("Відстань між точками по X"), jScrollBar_shilnistX, jLabel_shilnistX, 1);
-        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 15, 1, 7, 31);
+        jScrollBar_shilnistY = new JScrollBar(Adjustable.HORIZONTAL, 150, 10, 70, 310);
         jScrollBar_shilnistY.addAdjustmentListener(myAdjusmentListener);
         jLabel_shilnistY = new JLabel();
         super.setScrollBar(new JLabel("Відстань між точками по Y"), jScrollBar_shilnistY, jLabel_shilnistY, 2);
@@ -295,8 +297,8 @@ public class Napolnenie extends UpgradeImg {
     }
 
     private void writeLabelText() {
-        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 5 + " мм");
-        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 5 + " мм");
+        jLabel_shilnistX.setText((double) jScrollBar_shilnistX.getValue() / 50 + " мм");
+        jLabel_shilnistY.setText((double) jScrollBar_shilnistY.getValue() / 50 + " мм");
     }
 
     private class MyAdjusmentListener implements AdjustmentListener {
