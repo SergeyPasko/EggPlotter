@@ -168,11 +168,11 @@ class Dvijenie {
 				pozitsia_z++;
 			else
 				popravka_z++;
-			podashaSignalaZ(scorost);
+			podashaSignalaZ(multiScorostZ);
 
 			for (int i = 0; i < multiStepsZ; i++) {
 				popravka_z++;
-				podashaSignalaZ(scorost);
+				podashaSignalaZ(multiScorostZ);
 			}
 			break;
 
