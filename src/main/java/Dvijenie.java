@@ -267,9 +267,9 @@ class Dvijenie {
 	}
 
 	void notSignalXYZ(boolean notX, boolean notY, boolean notZ) {
-		lptWork.write(pPort.portAddress, (byte) ((notX ? 0 : vverhVnuzY[(pozitsia_y + popravka_y) % 4])
-				+ (notY ? 0 : vlevoVpravoX[(pozitsia_x + popravka_x) % 4])));
-		lptWork.write((short) (pPort.portAddress + 2), (byte) (notZ ? 11 : vverhVnuzZ[(pozitsia_z + popravka_z) % 8]));
+		lptWork.write(pPort.portAddress, (byte) ((notX ? 0 : vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length])
+				+ (notY ? 0 : vlevoVpravoX[(pozitsia_x + popravka_x) % vlevoVpravoX.length])));
+		lptWork.write((short) (pPort.portAddress + 2), (byte) (notZ ? 11 : vverhVnuzZ[(pozitsia_z + popravka_z) % vverhVnuzZ.length]));
 	}
 
 	// Переміщення в вказану точку
