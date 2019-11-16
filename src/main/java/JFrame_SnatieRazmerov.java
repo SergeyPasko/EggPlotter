@@ -472,7 +472,7 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void saveRazrezToFile(boolean ProcessFinished) {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez"+Param_Profile.getFileAppender()+".res");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_shirinaZagotovki.getValue());
             } else {
@@ -485,7 +485,7 @@ class JFrame_SnatieRazmerov extends JFrame {
                     rf.writeInt(drawPanel.massivKoordinat[i][j]);
                 }
 
-            rf =  FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
+            rf =  FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
             rf.writeInt(0);
             rf.close();
 
@@ -496,7 +496,7 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void loadRazrezFromFile() {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez"+Param_Profile.getFileAppender()+".res");
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {

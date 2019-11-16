@@ -1,0 +1,1 @@
+java -jar "EggPlotter-0.0.1-SNAPSHOT.jar" -Dprofile_name=second

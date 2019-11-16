@@ -899,9 +899,9 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void saveObrobkaToFile(boolean ProcessFinished) {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
 
-            File imgFile = FileUtils.getFile("tmpSave\\imgFile.bmp");
+            File imgFile = FileUtils.getFile("tmpSave\\imgFile"+Param_Profile.getFileAppender()+".bmp");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_scorostObrabotki.getValue());
                 rf.writeInt(jscrollbar_tonalnist.getValue());
@@ -925,8 +925,8 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void loadObrobkaFromFile() {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
-            File imgFile = FileUtils.getFile("tmpSave/imgFile.bmp");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
+            File imgFile = FileUtils.getFile("tmpSave/imgFile"+Param_Profile.getFileAppender()+".bmp");
            
             rf.seek(0);
             if (rf.readInt() == 0) return;
