@@ -414,11 +414,11 @@ class Dvijenie {
 				return;
 			if (delta > 0)
 				for (int i = 1; i <= delta; i++) {
-					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.OPUSTIT_INSRUMENT, true, scorost);
+					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.OPUSTIT_INSRUMENT, false, scorost);
 				}
 			else
 				for (int i = 1; i <= -delta; i++) {
-					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.PODNAT_INSRUMENT, true, scorost);
+					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.PODNAT_INSRUMENT, false, scorost);
 				}
 		}
 	}
