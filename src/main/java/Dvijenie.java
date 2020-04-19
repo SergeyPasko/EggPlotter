@@ -65,6 +65,7 @@ class Dvijenie {
 		int multiScorostZ=scorost;
 		if (Param_Profile.isSecondGeneration()) {
 			multiStepsZ = 0;
+			multiScorostZ=scorost*3/2;
 		} else{
 			multiScorostZ=scorost/2;
 		}
@@ -414,11 +415,11 @@ class Dvijenie {
 				return;
 			if (delta > 0)
 				for (int i = 1; i <= delta; i++) {
-					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.OPUSTIT_INSRUMENT, false, scorost);
+					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.OPUSTIT_INSRUMENT, true, scorost);
 				}
 			else
 				for (int i = 1; i <= -delta; i++) {
-					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.PODNAT_INSRUMENT, false, scorost);
+					zapusk.dvijenie.dvijenieNaOdinHag(Napravlenie_dvigenia.PODNAT_INSRUMENT, true, scorost);
 				}
 		}
 	}

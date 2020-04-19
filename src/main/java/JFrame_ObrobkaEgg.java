@@ -134,14 +134,18 @@ class JFrame_ObrobkaEgg extends JFrame {
                 jlabel_shisloScorostObrabotki.setText(String.format("%1$.3f мм/сек",
                         (double) jscrollbar_scorostObrabotki.getValue() / 300));
                if (Param_Profile.isSecondGeneration()){
-                   scorostObrabotki = 450000 / jscrollbar_scorostObrabotki.getValue();
+                   scorostObrabotki = 650000 / jscrollbar_scorostObrabotki.getValue();
                } else{
                    scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();  
                }
             }
         });
         jpanelKnopki.add(jscrollbar_scorostObrabotki);
-        scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();
+        if (Param_Profile.isSecondGeneration()){
+            scorostObrabotki = 650000 / jscrollbar_scorostObrabotki.getValue();
+        } else{
+            scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();  
+        }
 
         jscrollbar_tonalnist = new JScrollBar(HORIZONTAL, 50, 1, 20, 81);
         jscrollbar_tonalnist.setSize(3 * jpanelKnopki.getWidth() / 5, vusotaElementa);
@@ -749,85 +753,6 @@ class JFrame_ObrobkaEgg extends JFrame {
             return true;
         } else return false;
     }
-
-    //Обробка тональна посмужно
-    private void obrabkaTonalna() {
-        potokObrabotki = new Thread(new Runnable() {
-            public void run() {
-                zapusk.dvijenie.pozitsia_x = 0;
-                zapusk.dvijenie.pozitsia_y = zapusk.dvijenie.cmechenieNashalneY + zapusk.snatieRazmerov.polosaOgranishenia * 10;
-                zapusk.dvijenie.pozitsia_z = zapusk.dvijenie.vusotaPodjomaNashalna;
-                zapusk.dvijenie.goTo(0, 0, 0, zapusk.dvijenie.scorostPerehoda, false);
-                draw_height = true;
-                jbutton_stopObrobka.setEnabled(true);
-                jbutton_pausaObrobka.setEnabled(true);
-                for (int k = 0; k < vusota; k++) {
-                    if (k % 2 == 0)
-                        for (int j = 0; j < shirina; j++) {
-                            prorisovkaPolosuTonalna(k, j, true);
-                        }
-                    else {
-                        for (int j = shirina - 1; j > -1; j--) {
-                            prorisovkaPolosuTonalna(k, j, false);
-                        }
-                    }
-                }
-                perervatuObrobku(false, true);
-            }
-        });
-        potokObrabotki.start();
-    }
-
-    private void prorisovkaPolosuTonalna(int j, int k, boolean slevaNapravo) {
-        boolean contact = false;
-        Color color = Color.BLUE;
-        int p = massivToshekDlaKartinki[j * shirina + k];
-        if (!sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 0, 255 * 3) &&
-                (0xff & (p >> 16)) == (0xff & (p)) && ((0xff & (p >> 8)) == (0xff & (p)))) {
-
-            if ((slevaNapravo && !sravnenieSveta(massivToshekDlaKartinki, k, j, 1, 0, 255 * 3)) ||
-                    (!slevaNapravo && !sravnenieSveta(massivToshekDlaKartinki, k, j, -1, 0, 255 * 3))) {
-                contact = true;
-                zapusk.dvijenie.goTo(2 * k, 2 * j, zapusk.dvijenie.pozitsia_z, zapusk.dvijenie.scorostPerehoda, true);
-                zapusk.dvijenie.goTo(2 * k, 2 * j, zapusk.snatieRazmerov.pomeraniRazmeru[2 * j][4] - zapusk.dvijenie.vusotaProhodaNadPoverhnostu, zapusk.dvijenie.scorostPerehoda, true);
-                zapusk.dvijenie.goTo(2 * k, 2 * j, zapusk.snatieRazmerov.pomeraniRazmeru[2 * j][4],
-                        scorostObrabotki, true);
-            }
-            massivToshekDlaKartinki[j * shirina + k] = massivToshekDlaKartinki[j * shirina + k] | color.getBlue();
-            kolishesvo_narisovannuh_toshek += 1;
-            procent_vupolnenia = (kolishesvo_narisovannuh_toshek * 100) / kolishesvo_chernuh_toshek;
-            jprogressbar_obrabotka.setValue(procent_vupolnenia);
-
-            while (contact) {
-                if (slevaNapravo && dvijenieTonalne(1)) continue;
-                if (!slevaNapravo && dvijenieTonalne(-1)) continue;
-                contact = false;
-                zapusk.dvijenie.goTo(zapusk.dvijenie.pozitsia_x, zapusk.dvijenie.pozitsia_y,
-                        zapusk.dvijenie.pozitsia_z - zapusk.dvijenie.vusotaProhodaNadPoverhnostu, zapusk.dvijenie.scorostPerehoda, true);
-            }
-        }
-    }
-
-    //Аналіз з тонального переміщенням на сусідній піксель
-    private boolean dvijenieTonalne(int delta_x) {
-        Color vuhodnoy = Color.BLUE;
-        if (zapusk.dvijenie.pozitsia_x + 2 * delta_x < 0 || zapusk.dvijenie.pozitsia_x / 2 + 2 * delta_x > shirina - 1)
-            return false;
-        if (!sravnenieSveta(massivToshekDlaKartinki, zapusk.dvijenie.pozitsia_x / 2, zapusk.dvijenie.pozitsia_y / 2,
-                delta_x, 0, 255 * 3)) {
-            zapusk.dvijenie.goTo(zapusk.dvijenie.pozitsia_x + 2 * delta_x, zapusk.dvijenie.pozitsia_y,
-                    zapusk.dvijenie.pozitsia_z, scorostObrabotki, true);
-            massivToshekDlaKartinki[zapusk.dvijenie.pozitsia_y / 2 * shirina + zapusk.dvijenie.pozitsia_x / 2] =
-                    massivToshekDlaKartinki[zapusk.dvijenie.pozitsia_y / 2 * shirina + zapusk.dvijenie.pozitsia_x / 2] | vuhodnoy.getBlue();
-            kolishesvo_narisovannuh_toshek += 1;
-            procent_vupolnenia = (kolishesvo_narisovannuh_toshek * 100) / kolishesvo_chernuh_toshek;
-            jprogressbar_obrabotka.setValue(procent_vupolnenia);
-            draw_obrablayemaiyKartinka.setImage(createImage(new MemoryImageSource(shirina, vusota,
-                    massivToshekDlaKartinki, 0, shirina)), true);
-            return true;
-        } else return false;
-    }
-
 
     //Реакція на закриття вікна або нажимання кнопки "Стоп"
     private void perervatuObrobku(final boolean exit, final boolean konethObrabotki) {

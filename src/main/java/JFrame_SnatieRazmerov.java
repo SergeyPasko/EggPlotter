@@ -108,7 +108,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jscrollbar_shirinaZagotovki.setLocation(mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         jscrollbar_shirinaZagotovki.addAdjustmentListener(new AdjustmentListener() {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
-                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() + " мм");
+                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-3:0)+ " мм");
                 drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue)) / 2 - 4, 0);
                 razmerZagotovki = jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue + 1;
                 drawPanel.setSize(razmerZagotovki, vusotaOkna - 6 * vusotaElementa - 30);
@@ -138,7 +138,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jlabel_podpisShirina.setLocation(0, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_podpisShirina);
 
-        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() + " мм", JLabel.CENTER);
+        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-3:0) + " мм", JLabel.CENTER);
         jlabel_shisloShirina.setSize(mainPanel.getWidth() / 5, vusotaElementa);
         jlabel_shisloShirina.setLocation(4 * mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_shisloShirina);
