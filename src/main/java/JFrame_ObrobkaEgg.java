@@ -397,7 +397,7 @@ class JFrame_ObrobkaEgg extends JFrame {
     }
 
     public void setSizeFrame() {
-        vusotaOkna = zapusk.snatieRazmerov.razmerZagotovki / 10 * 5 +
+        vusotaOkna = zapusk.snatieRazmerov.razmerZagotovki / 2 +
                 jpanelKnopki.getHeight() + 30;
         this.setSize(new Dimension(shirinaOkna+20, vusotaOkna));
         this.setMinimumSize(new Dimension(shirinaOkna+20, vusotaOkna));
@@ -500,10 +500,6 @@ class JFrame_ObrobkaEgg extends JFrame {
         Image imgDlaObrobki = null;
         shirina = draw_obrablayemaiyKartinka.getWidth();
         vusota = draw_obrablayemaiyKartinka.getHeight();
-        // if (jradiobutton_originalneZobrajenna.isSelected()) {
-        //     imgDlaObrobki = imgOriginalneZobrajenna;
-        // }
-        // if (jradiobutton_monochromneZobrajenna.isSelected())
         {
             massivToshekDlaKartinki = new int[vusota * shirina];
             try {
@@ -546,31 +542,7 @@ class JFrame_ObrobkaEgg extends JFrame {
             kolishesvo_chernuh_toshek -= kolishesvo_krasnuh_toshek;
             imgDlaObrobki = createImage(new MemoryImageSource(shirina, vusota, massivToshekDlaKartinki, 0, shirina));
         }
-        /*if (jradiobutton_tonalneZobrajenna.isSelected()) {
-            massivToshekDlaKartinki = new int[vusota * shirina];
-            try {
-                PixelGrabber pg = new PixelGrabber(imgOriginalneZobrajenna, 0, 0, shirina, vusota, massivToshekDlaKartinki, 0, shirina);
-                pg.grabPixels();
-            } catch (InterruptedException ignored) {
-            }
-            int yarkost;
-            for (int j = 0; j < shirina; j++) {
-                for (int k = 0; k < vusota; k++) {
-                    int p = massivToshekDlaKartinki[k * shirina + j];
-                    int r = 0xff & (p >> 16);
-                    int g = 0xff & (p >> 8);
-                    int b = 0xff & (p);
-                    if (r + b + g <= 255 * 3 * (jscrollbar_tonalnist.getValue()) / 100) {
-                        yarkost = (int) (0.56 * g + 0.33 * r + 0.11 * b);
-                        kolishesvo_chernuh_toshek += 1;
-                    } else yarkost = 255;
-                    massivToshekDlaKartinki[k * shirina + j] = (0Xff000000 | yarkost << 16 | yarkost << 8 | yarkost);
-                }
-            }
 
-            imgDlaObrobki = createImage(new MemoryImageSource(shirina, vusota, massivToshekDlaKartinki, 0, shirina));
-
-        }  */
         draw_obrablayemaiyKartinka.setImage(imgDlaObrobki, true);
     }
 
