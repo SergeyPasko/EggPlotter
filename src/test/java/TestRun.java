@@ -8,7 +8,7 @@
 public class TestRun {
     public static void main(String args[]) throws InterruptedException {
         Zapusk zapusk = new Zapusk();
-        int value = 2420;
+        int value = Integer.MAX_VALUE;
         zapusk.dvijenie.goTo( value, 0,0, 500, false);
         Thread.sleep(3000);
 

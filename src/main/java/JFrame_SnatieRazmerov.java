@@ -108,7 +108,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jscrollbar_shirinaZagotovki.setLocation(mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         jscrollbar_shirinaZagotovki.addAdjustmentListener(new AdjustmentListener() {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
-                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-3:0)+ " мм");
+                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-8:0)+ " мм");
                 drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue)) / 2 - 4, 0);
                 razmerZagotovki = jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue + 1;
                 drawPanel.setSize(razmerZagotovki, vusotaOkna - 6 * vusotaElementa - 30);
@@ -138,7 +138,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jlabel_podpisShirina.setLocation(0, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_podpisShirina);
 
-        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-3:0) + " мм", JLabel.CENTER);
+        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-8:0) + " мм", JLabel.CENTER);
         jlabel_shisloShirina.setSize(mainPanel.getWidth() / 5, vusotaElementa);
         jlabel_shisloShirina.setLocation(4 * mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_shisloShirina);
@@ -231,12 +231,8 @@ class JFrame_SnatieRazmerov extends JFrame {
                 setVisible(false);
                 zapusk.obrobkaEgg.jbutton_zavantajitiZobrajenna.setEnabled(true);
                 zapusk.obrobkaEgg.jbutton_zberegtuZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_originalneZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_monochromneZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_tonalneZobrajenna.setEnabled(false);
                 zapusk.obrobkaEgg.jscrollbar_tonalnist.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_vurizatuKontyru.setEnabled(false);
-                zapusk.obrobkaEgg.jbutton_vugraivatuMonochromneZobrajenna.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_vugraivatuKontyru.setEnabled(false);
                 zapusk.obrobkaEgg.jprogressbar_obrabotka.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_stopObrobka.setEnabled(false);
