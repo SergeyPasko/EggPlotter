@@ -641,7 +641,26 @@ class JFrame_ObrobkaEgg extends JFrame {
                     sravnenieSveta(massivToshekDlaKartinki, k, j, 1, 1, sravnivaemoe_znashenie) ||
                     sravnenieSveta(massivToshekDlaKartinki, k, j, 1, -1, sravnivaemoe_znashenie) ||
                     sravnenieSveta(massivToshekDlaKartinki, k, j, -1, 1, sravnivaemoe_znashenie) ||
-                    sravnenieSveta(massivToshekDlaKartinki, k, j, -1, -1, sravnivaemoe_znashenie)) {
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -1, -1, sravnivaemoe_znashenie)||
+                    
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 2, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 1, 2, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 2, 1, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 2, 0, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 2, -1, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 1, -2, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 0, -2, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -1, -2, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -2, -1, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -2, -0, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -2, 1, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -1, 2, sravnivaemoe_znashenie)||
+                    
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 3, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 3, 0, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, 0, -3, sravnivaemoe_znashenie)||
+                    sravnenieSveta(massivToshekDlaKartinki, k, j, -3, 0, sravnivaemoe_znashenie)) {
+            	
                 contact = true;
                 zapusk.dvijenie.goTo(2 * k, 2 * j, zapusk.dvijenie.pozitsia_z, zapusk.dvijenie.scorostPerehoda, true);
                 zapusk.dvijenie.goTo(2 * k, 2 * j, zapusk.snatieRazmerov.pomeraniRazmeru[2 * j][4] - zapusk.dvijenie.vusotaProhodaNadPoverhnostu, zapusk.dvijenie.scorostPerehoda, true);
@@ -666,25 +685,25 @@ class JFrame_ObrobkaEgg extends JFrame {
                 if (dvijenie(-1, -1, sravnivaemoe_znashenie)) continue;
                 if (dvijenie(-1, 0, sravnivaemoe_znashenie)) continue;
                 if (dvijenie(-1, 1, sravnivaemoe_znashenie)) continue;
-                if (sravnivaemoe_znashenie == 210) {
-                    if (dvijenie(0, 2, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(1, 2, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(2, 1, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(2, 0, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(2, -1, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(1, -2, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(0, -2, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-1, -2, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-2, -1, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-2, 0, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-2, 1, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-1, 2, sravnivaemoe_znashenie)) continue;
 
-                    if (dvijenie(0, 3, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(3, 0, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(0, -3, sravnivaemoe_znashenie)) continue;
-                    if (dvijenie(-3, 0, sravnivaemoe_znashenie)) continue;
-                }
+                if (dvijenie(0, 2, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(1, 2, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(2, 1, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(2, 0, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(2, -1, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(1, -2, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(0, -2, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-1, -2, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-2, -1, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-2, 0, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-2, 1, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-1, 2, sravnivaemoe_znashenie)) continue;
+
+                if (dvijenie(0, 3, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(3, 0, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(0, -3, sravnivaemoe_znashenie)) continue;
+                if (dvijenie(-3, 0, sravnivaemoe_znashenie)) continue;
+
                 //System.out.println("End");
                 contact = false;
                 zapusk.dvijenie.goTo(zapusk.dvijenie.pozitsia_x, zapusk.dvijenie.pozitsia_y,
