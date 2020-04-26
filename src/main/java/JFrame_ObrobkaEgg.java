@@ -45,25 +45,18 @@ class JFrame_ObrobkaEgg extends JFrame {
     JButton jbutton_pereituDoVumiruvanna;
     JButton jbutton_vurizatuKontyru;
     JButton jbutton_vugraivatuKontyru;
-    JButton jbutton_vugraivatuMonochromneZobrajenna;
     JButton jbutton_prodovjituPoperednu;
-    // JButton jbutton_vugraivatuTonalneZobrajenna;
     JButton jbutton_zminutuImg;
     JButton jbutton_pausaObrobka;
     JButton jbutton_stopObrobka;
 
     JToggleButton jbutton_rushneUpravlinna;
+    JCheckBox jCheckBox_onePixel;
     JCheckBox jCheckBox_autoExit;
-
-    // JRadioButton jradiobutton_originalneZobrajenna;
-    // JRadioButton jradiobutton_monochromneZobrajenna;
-    // JRadioButton jradiobutton_tonalneZobrajenna;
-    // ButtonGroup buttongroup;
 
     JScrollBar jscrollbar_scorostObrabotki;
     JScrollBar jscrollbar_tonalnist;
     JProgressBar jprogressbar_obrabotka;
-
 
     Image imgOriginalneZobrajenna;
     Draw_ObrablayemaiyKartinka draw_obrablayemaiyKartinka;
@@ -188,7 +181,10 @@ class JFrame_ObrobkaEgg extends JFrame {
                 loadImage(null);
             }
         });
-        jbutton_prodovjituPoperednu = newAddButton("Продовжити попередню обробку", 1, 2);
+        jbutton_prodovjituPoperednu = new JButton("Продовжити попередню обробку");
+        jbutton_prodovjituPoperednu.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
+        jbutton_prodovjituPoperednu.setLocation(0, jpanelKnopki.getHeight() - 8 * vusotaElementa);
+        jpanelKnopki.add(jbutton_prodovjituPoperednu);
         jbutton_prodovjituPoperednu.setEnabled(false);
         jbutton_prodovjituPoperednu.addActionListener(new ActionListener() {
             @Override
@@ -198,11 +194,6 @@ class JFrame_ObrobkaEgg extends JFrame {
                         jbutton_vurizatuKontyru.setEnabled(true);
                         jbutton_vurizatuKontyru.doClick();
                         jbutton_vurizatuKontyru.setEnabled(false);
-                        break;
-                    case 2:
-                        jbutton_vugraivatuMonochromneZobrajenna.setEnabled(true);
-                        jbutton_vugraivatuMonochromneZobrajenna.doClick();
-                        jbutton_vugraivatuMonochromneZobrajenna.setEnabled(false);
                         break;
                     case 3:
                         jbutton_vugraivatuKontyru.setEnabled(true);
@@ -254,22 +245,9 @@ class JFrame_ObrobkaEgg extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 jprogressbar_obrabotka.setToolTipText("Триває вирізання контурів зображення");
                 draw_obrablayemaiyKartinka.setToolTipText("Триває вирізання контурів зображення");
-                //jradiobutton_monochromneZobrajenna.doClick();
                 selectedItem = 1;
                 blokirovkaKlavishPriObraabotki();
                 obrabkaPoKrivum(true, true);
-            }
-        });
-        jbutton_vugraivatuMonochromneZobrajenna = newAddButton("Намалювати монохромне забраження", 2, 6);
-        jbutton_vugraivatuMonochromneZobrajenna.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jprogressbar_obrabotka.setToolTipText("Триває малювання монохромного зображення");
-                draw_obrablayemaiyKartinka.setToolTipText("Триває малювання монохромного зображення");
-                // jradiobutton_monochromneZobrajenna.doClick();
-                selectedItem = 2;
-                blokirovkaKlavishPriObraabotki();
-                obrabkaPoKrivum(false, false);
             }
         });
         jbutton_vugraivatuKontyru = newAddButton("Намалювати контури", 1, 7);
@@ -278,7 +256,6 @@ class JFrame_ObrobkaEgg extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 jprogressbar_obrabotka.setToolTipText("Триває малювання контурів зображення");
                 draw_obrablayemaiyKartinka.setToolTipText("Триває малювання контурів зображення");
-                // jradiobutton_monochromneZobrajenna.doClick();
                 selectedItem = 3;
                 blokirovkaKlavishPriObraabotki();
                 obrabkaPoKrivum(true, false);
@@ -350,49 +327,16 @@ class JFrame_ObrobkaEgg extends JFrame {
         jpanelKnopki.add(jprogressbar_obrabotka);
 
         //Галочка про автовиключення
-        jCheckBox_autoExit = new JCheckBox("Автоматичне вимикання компютера при завершенні обробки");
-        jCheckBox_autoExit.setSize(jpanelKnopki.getWidth() / 2, vusotaElementa);
-        jCheckBox_autoExit.setLocation(jpanelKnopki.getWidth() / 2, jpanelKnopki.getHeight() - 8 * vusotaElementa);
+        jCheckBox_autoExit = new JCheckBox("Автоматичне вимикання компютера при завершенні");
+        jCheckBox_autoExit.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
+        jCheckBox_autoExit.setLocation(jpanelKnopki.getWidth() * 2 / 3, jpanelKnopki.getHeight() - 8 * vusotaElementa);
         jpanelKnopki.add(jCheckBox_autoExit);
-        //Перемикачі
-      /*  jradiobutton_originalneZobrajenna = new JRadioButton("Оригінал зображення");
-        jradiobutton_originalneZobrajenna.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
-        jradiobutton_originalneZobrajenna.setLocation(0, jpanelKnopki.getHeight() - 8 * vusotaElementa);
-        jpanelKnopki.add(jradiobutton_originalneZobrajenna);
-
-        jradiobutton_monochromneZobrajenna = new JRadioButton("Монохромне зображення");
-        jradiobutton_monochromneZobrajenna.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
-        jradiobutton_monochromneZobrajenna.setLocation(jpanelKnopki.getWidth() / 3, jpanelKnopki.getHeight() - 8 * vusotaElementa);
-        jpanelKnopki.add(jradiobutton_monochromneZobrajenna);
-
-        jradiobutton_tonalneZobrajenna = new JRadioButton("Тональне зображення");
-        jradiobutton_tonalneZobrajenna.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
-        jradiobutton_tonalneZobrajenna.setLocation(2 * jpanelKnopki.getWidth() / 3, jpanelKnopki.getHeight() - 8 * vusotaElementa);
-        jpanelKnopki.add(jradiobutton_tonalneZobrajenna);
-
-        buttongroup = new ButtonGroup();
-        buttongroup.add(jradiobutton_originalneZobrajenna);
-        buttongroup.add(jradiobutton_monochromneZobrajenna);
-        buttongroup.add(jradiobutton_tonalneZobrajenna);
-        jradiobutton_monochromneZobrajenna.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayKartinka();
-            }
-        });
-        jradiobutton_originalneZobrajenna.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayKartinka();
-            }
-        });
-        jradiobutton_tonalneZobrajenna.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayKartinka();
-            }
-        });
-        jradiobutton_originalneZobrajenna.setSelected(true);  */
+        
+        //Галочка про прорізання одиночних пікселів
+        jCheckBox_onePixel = new JCheckBox("Вирізати одиночні пікселі");
+        jCheckBox_onePixel.setSize(jpanelKnopki.getWidth() / 3, vusotaElementa);
+        jCheckBox_onePixel.setLocation(jpanelKnopki.getWidth() / 3, jpanelKnopki.getHeight() - 8 * vusotaElementa);
+        jpanelKnopki.add(jCheckBox_onePixel);
         setSizeFrame();
     }
 
@@ -413,16 +357,11 @@ class JFrame_ObrobkaEgg extends JFrame {
         jbutton_zavantajitiZobrajenna.setEnabled(false);
         jbutton_zberegtuZobrajenna.setEnabled(false);
         jbutton_zminutuImg.setEnabled(false);
-        //jradiobutton_originalneZobrajenna.setEnabled(false);
-        //jradiobutton_monochromneZobrajenna.setEnabled(false);
-        //jradiobutton_tonalneZobrajenna.setEnabled(false);
         jscrollbar_tonalnist.setEnabled(false);
         if (jbutton_rushneUpravlinna.isSelected()) zapusk.snatieRazmerov.jbutton_rushneUpravlinna.doClick();
         jbutton_rushneUpravlinna.setEnabled(false);
         jbutton_pereituDoVumiruvanna.setEnabled(false);
         jbutton_vurizatuKontyru.setEnabled(false);
-        //jbutton_vugraivatuTonalneZobrajenna.setEnabled(false);
-        jbutton_vugraivatuMonochromneZobrajenna.setEnabled(false);
         jbutton_vugraivatuKontyru.setEnabled(false);
         jprogressbar_obrabotka.setEnabled(true);
     }
@@ -480,13 +419,8 @@ class JFrame_ObrobkaEgg extends JFrame {
 
             displayKartinka();
             jbutton_zberegtuZobrajenna.setEnabled(true);
-            //jradiobutton_originalneZobrajenna.setEnabled(true);
-            //jradiobutton_monochromneZobrajenna.setEnabled(true);
-            //jradiobutton_tonalneZobrajenna.setEnabled(true);
             jscrollbar_tonalnist.setEnabled(true);
             jbutton_vurizatuKontyru.setEnabled(true);
-            //jbutton_vugraivatuTonalneZobrajenna.setEnabled(true);
-            jbutton_vugraivatuMonochromneZobrajenna.setEnabled(true);
             jbutton_vugraivatuKontyru.setEnabled(true);
             jbutton_prodovjituPoperednu.setEnabled(false);
         }
@@ -634,7 +568,9 @@ class JFrame_ObrobkaEgg extends JFrame {
         Color color = Color.BLUE;
         if (sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 0, sravnivaemoe_znashenie)) {
 
-            if (sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 1, sravnivaemoe_znashenie) ||
+            if (jCheckBox_onePixel.isSelected()||
+            		
+            		sravnenieSveta(massivToshekDlaKartinki, k, j, 0, 1, sravnivaemoe_znashenie) ||
                     sravnenieSveta(massivToshekDlaKartinki, k, j, 0, -1, sravnivaemoe_znashenie) ||
                     sravnenieSveta(massivToshekDlaKartinki, k, j, 1, 0, sravnivaemoe_znashenie) ||
                     sravnenieSveta(massivToshekDlaKartinki, k, j, -1, 0, sravnivaemoe_znashenie) ||
@@ -825,6 +761,7 @@ class JFrame_ObrobkaEgg extends JFrame {
                 rf.writeInt(kolishesvo_krasnuh_toshek);
                 rf.writeInt(kolishesvo_narisovannuh_toshek);
                 rf.writeInt(selectedItem);
+                rf.writeBoolean(jCheckBox_onePixel.isSelected());
                 BufferedImage bi = imageToBufferedImage(createImage(new MemoryImageSource(shirina, vusota, massivToshekDlaKartinki, 0, shirina)));
                 ImageIO.write(bi, "bmp", imgFile);
                 rf.close();
@@ -854,13 +791,11 @@ class JFrame_ObrobkaEgg extends JFrame {
                 kolishesvo_krasnuh_toshek = rf.readInt();
                 kolishesvo_narisovannuh_toshek = rf.readInt();
                 selectedItem = rf.readInt();
+                jCheckBox_onePixel.setSelected(rf.readBoolean());
                 String temp = "";
                 switch (selectedItem) {
                     case 1:
                         temp = jbutton_vurizatuKontyru.getText();
-                        break;
-                    case 2:
-                        temp = jbutton_vugraivatuMonochromneZobrajenna.getText();
                         break;
                     case 3:
                         temp = jbutton_vugraivatuKontyru.getText();

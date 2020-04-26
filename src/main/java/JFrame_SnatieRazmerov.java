@@ -231,12 +231,8 @@ class JFrame_SnatieRazmerov extends JFrame {
                 setVisible(false);
                 zapusk.obrobkaEgg.jbutton_zavantajitiZobrajenna.setEnabled(true);
                 zapusk.obrobkaEgg.jbutton_zberegtuZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_originalneZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_monochromneZobrajenna.setEnabled(false);
-                // zapusk.obrobkaEgg.jradiobutton_tonalneZobrajenna.setEnabled(false);
                 zapusk.obrobkaEgg.jscrollbar_tonalnist.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_vurizatuKontyru.setEnabled(false);
-                zapusk.obrobkaEgg.jbutton_vugraivatuMonochromneZobrajenna.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_vugraivatuKontyru.setEnabled(false);
                 zapusk.obrobkaEgg.jprogressbar_obrabotka.setEnabled(false);
                 zapusk.obrobkaEgg.jbutton_stopObrobka.setEnabled(false);
