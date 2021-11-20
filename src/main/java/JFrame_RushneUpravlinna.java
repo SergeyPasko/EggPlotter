@@ -63,8 +63,9 @@ class JFrame_RushneUpravlinna extends JFrame {
         addButton("Icons/VnuzVlevo.png", "-X,+Y", 1, 1, 0, 2);
         addButton("Icons/Vnuz.png", "+Y", 1, 1, 1, 2);
         addButton("Icons/VnuzVpravo.png", "+X,+Y", 1, 1, 2, 2);
-        addButton("Icons/VverhZ.png", "-Z", 1, 1.5, 3, 0);
-        addButton("Icons/VnuzZ.png", "+Z", 1, 1.5, 3, 1.5);
+        addButton("Icons/VverhZ.png", "-Z", 1, 1, 3, 0);
+        addButton("Icons/VnuzZ.png", "+Z", 1, 1, 3, 1);
+        addButton("Icons/UnblockMotors.png", "O", 1, 1, 3, 2);
 
         jlabel_contact = new JLabel();
         jlabel_contact.setSize(storonaElementa, storonaElementa);
@@ -134,6 +135,10 @@ class JFrame_RushneUpravlinna extends JFrame {
                     case 31:
                         napravlenie_dvigenia = Napravlenie_dvigenia.OPUSTIT_INSRUMENT;
                         break;
+                    case 32:
+                        napravlenie_dvigenia = null;
+                        zapusk.dvijenie.notSignalXYZ(true, true, true);
+                        break;
                     default:
                         napravlenie_dvigenia = null;
                         break;
@@ -160,7 +165,7 @@ class JFrame_RushneUpravlinna extends JFrame {
             @Override
             public void run() {
                 while (true) {
-                    if (nowPressed) {
+                    if (nowPressed && napravlenie_dvigenia != null) {
                         zapusk.dvijenie.dvijenieNaOdinHag(napravlenie_dvigenia, false, zapusk.dvijenie.scorostPerehoda*2);
                         if (zapusk.dvijenie.nowKontact())
                             try {
