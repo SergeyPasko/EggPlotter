@@ -53,9 +53,9 @@ class Dvijenie {
 		pressedBite = Integer.highestOneBit(lptWork.read((short) (pPort.portAddress + 1)));
 		shustvitelnostVumiruvanna = zapusk.snatieRazmerov.jscrollBar_chustvitelnostVumiruvanna.getValue();
 		if (Param_Profile.isSecondGeneration()) {
-			vlevoVpravoX = new int[] { 1, 3, 2, 6, 4, 12, 8, 9 };
-			vverhVnuzY = new int[] { 128, 160, 32, 96, 64, 80, 16, 144 };
-			vverhVnuzZ = new int[] { 13, 9, 1, 3, 2, 10, 14, 15 };
+            vlevoVpravoX = new int[]{1, 3, 2, 6, 4, 12, 8, 9};
+            vverhVnuzY = new int[]{128, 160, 32, 96, 64, 80, 16, 144};
+            vverhVnuzZ = new int[]{15, 14, 10, 2, 3, 1, 9, 13};
 		}
 	}
 
