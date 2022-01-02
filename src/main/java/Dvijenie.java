@@ -1,5 +1,5 @@
 import Config.Param_Dvijenie;
-import Config.Param_Profile;
+import jnpout32.LptPort;
 import jnpout32.pPort;
 
 /**
@@ -22,9 +22,9 @@ class Dvijenie {
 	int vusotaPodjomaNashalna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.VUSOTAPODJOMANASHALNA);
 	int cmechenieNashalneY = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.SMESHENIENASHALNE);
 	int komandNaPovorot = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.HAGOVNAPOVOROT);
-	private int vverhVnuzY[] = { 1, 4, 2, 8 };
-	private int vlevoVpravoX[] = { 128, 32, 64, 16 };
-	private int vverhVnuzZ[] = { 15, 14, 10, 8, 9, 1, 3, 7 };
+	private int[] vlevoVpravoX = new int[]{1, 3, 2, 6, 4, 12, 8, 9};
+	private int[] vverhVnuzY = new int[]{128, 160, 32, 96, 64, 80, 16, 144};
+	private int[] vverhVnuzZ = new int[]{15, 14, 10, 2, 3, 1, 9, 13};
 	/*
 	 * Перший Зміщення вверх/вниз на 100мм 1000команд поворот вліво/вправо на
 	 * 360град 1580команд зміщення вверх/вниз по Z на 34мм 400команд 
@@ -35,7 +35,6 @@ class Dvijenie {
 	 * 360град 2000команд зміщення вверх/вниз по Z на 166мм 2000команд
 	 */
 
-	private LPT_work lptWork = new LPT_work();
 	private boolean izmenenieNapravleniaDvigeniaX = false;
 	private int hagovVOtsshetePopravkaX = Param_Dvijenie.getInstance()
 			.getProperty(Param_Dvijenie.HAGOVVOTSSHETEPOPRAVKAX);
@@ -50,25 +49,14 @@ class Dvijenie {
 
 	public Dvijenie(Zapusk zapusk) {
 		this.zapusk = zapusk;
-		pressedBite = Integer.highestOneBit(lptWork.read((short) (pPort.portAddress + 1)));
+		pressedBite = Integer.highestOneBit(LptPort.read((short) (pPort.portAddress + 1)));
 		shustvitelnostVumiruvanna = zapusk.snatieRazmerov.jscrollBar_chustvitelnostVumiruvanna.getValue();
-		if (Param_Profile.isSecondGeneration()) {
-            vlevoVpravoX = new int[]{1, 3, 2, 6, 4, 12, 8, 9};
-            vverhVnuzY = new int[]{128, 160, 32, 96, 64, 80, 16, 144};
-            vverhVnuzZ = new int[]{15, 14, 10, 2, 3, 1, 9, 13};
-		}
 	}
 
 	// Команди для моторів на переміщення на один крок, з врахуванням люфтів
 	public void dvijenieNaOdinHag(Napravlenie_dvigenia napravlenie, boolean izmenenieKoordinat, int scorost) {
-		int multiStepsZ = 4;
-		int multiScorostZ=scorost;
-		if (Param_Profile.isSecondGeneration()) {
-			multiStepsZ = 0;
-			multiScorostZ=scorost*3/2;
-		} else{
-			multiScorostZ=scorost/2;
-		}
+		int multiScorostZ=scorost*3/2;
+		
 		switch (napravlenie) {
 		case VVERH:
 			popravkaLuftov(Napravlenie_dvigenia.VVERH, scorost);
@@ -157,10 +145,6 @@ class Dvijenie {
 			else
 				popravka_z--;
 			podashaSignalaZ(multiScorostZ);
-			for (int i = 0; i < multiStepsZ; i++) {
-				popravka_z--;
-				podashaSignalaZ(multiScorostZ);
-			}
 			break;
 		case OPUSTIT_INSRUMENT:
 			popravkaLuftov(Napravlenie_dvigenia.OPUSTIT_INSRUMENT, scorost);
@@ -170,11 +154,6 @@ class Dvijenie {
 			else
 				popravka_z++;
 			podashaSignalaZ(multiScorostZ);
-
-			for (int i = 0; i < multiStepsZ; i++) {
-				popravka_z++;
-				podashaSignalaZ(multiScorostZ);
-			}
 			break;
 
 		}
@@ -246,7 +225,7 @@ class Dvijenie {
 		sleepNano(scorost * 10000);
 		// if (pozitsia_z) System.out.println("x="+pozitsia_x+" y="+pozitsia_y+"
 		// z="+pozitsia_z);
-		lptWork.write(pPort.portAddress, (byte) (vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length]
+		LptPort.write(pPort.portAddress, (byte) (vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length]
 				+ vlevoVpravoX[(pozitsia_x + popravka_x) % vlevoVpravoX.length]));
 
 	}
@@ -254,7 +233,7 @@ class Dvijenie {
 	// Команда на порт для мотору, що переміщює інструмент
 	private void podashaSignalaZ(int scorost) {
 		sleepNano(scorost * 10000);
-		lptWork.write((short) (pPort.portAddress + 2),
+		LptPort.write((short) (pPort.portAddress + 2),
 				(byte) (vverhVnuzZ[(pozitsia_z + popravka_z) % vverhVnuzZ.length]));
 
 	}
@@ -268,9 +247,9 @@ class Dvijenie {
 	}
 
 	void notSignalXYZ(boolean notX, boolean notY, boolean notZ) {
-		lptWork.write(pPort.portAddress, (byte) ((notX ? 0 : vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length])
+		LptPort.write(pPort.portAddress, (byte) ((notX ? 0 : vverhVnuzY[(pozitsia_y + popravka_y) % vverhVnuzY.length])
 				+ (notY ? 0 : vlevoVpravoX[(pozitsia_x + popravka_x) % vlevoVpravoX.length])));
-		lptWork.write((short) (pPort.portAddress + 2), (byte) (notZ ? 11 : vverhVnuzZ[(pozitsia_z + popravka_z) % vverhVnuzZ.length]));
+		LptPort.write((short) (pPort.portAddress + 2), (byte) (notZ ? 11 : vverhVnuzZ[(pozitsia_z + popravka_z) % vverhVnuzZ.length]));
 	}
 
 	// Переміщення в вказану точку
@@ -363,7 +342,7 @@ class Dvijenie {
 
 	// Перевірка для датчика чи є контакт з поверхнею
 	public boolean nowKontact() {
-		return pressedBite != Integer.highestOneBit(lptWork.read((short) (pPort.portAddress + 1)));
+		return pressedBite != Integer.highestOneBit(LptPort.read((short) (pPort.portAddress + 1)));
 	}
 
 	// Виконуються зсуви по Z в залежності від кривизни (проміряних радіусів)

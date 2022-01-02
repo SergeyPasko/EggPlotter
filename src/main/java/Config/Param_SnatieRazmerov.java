@@ -13,7 +13,7 @@ public class Param_SnatieRazmerov {
     private static Param_SnatieRazmerov instance;
     private ResourceBundle resourceBundle;
     //класс извлекает информацию из файла messages. properties
-    private static final String BUNDLE_NAME = "SnatieRazmerov" + Param_Profile.getFileAppender();
+    private static final String BUNDLE_NAME = "SnatieRazmerov";
     public static final String POLOSA_OGRANISHENIA = "POLOSA_OGRANISHENIA";
     public static final String VUSOTA_ELEMENTA = "VUSOTA_ELEMENTA";
     public static final String VUSOTA_OKNA = "VUSOTA_OKNA";

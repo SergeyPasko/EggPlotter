@@ -10,7 +10,7 @@ public class Param_Dvijenie {
 	private static Param_Dvijenie instance;
 	private ResourceBundle resourceBundle;
 	// класс извлекает информацию из файла messages. properties
-	private static final String BUNDLE_NAME = "Dvijenie" + Param_Profile.getFileAppender();
+	private static final String BUNDLE_NAME = "Dvijenie";
 
 	public static final String VUSOTAPROHODANADPOVERHNOSTU = "VUSOTAPROHODANADPOVERHNOSTU";
 	public static final String GLUBINAPROREZANIA = "GLUBINAPROREZANIA";

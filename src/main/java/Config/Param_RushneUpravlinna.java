@@ -13,7 +13,7 @@ public class Param_RushneUpravlinna {
     private static Param_RushneUpravlinna instance;
     private ResourceBundle resourceBundle;
     //класс извлекает информацию из файла messages. properties
-    private static final String BUNDLE_NAME = "RushneUpravlinna" + Param_Profile.getFileAppender();
+    private static final String BUNDLE_NAME = "RushneUpravlinna";
     public static final String VUSOTA_ELEMENTA = "VUSOTA_ELEMENTA";
 
     public static Param_RushneUpravlinna getInstance() {

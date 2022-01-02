@@ -1,20 +1,37 @@
 import Config.Param_Dvijenie;
 import Config.Param_ObrabotkaEgg;
-import Config.Param_Profile;
 import drawPanels.Draw_ObrablayemaiyKartinka;
 import drawPanels.Draw_VusotaInstrumenta;
-import utils.FileUtils;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FileDialog;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
+import javax.swing.JToggleButton;
+import utils.FileUtils;
 
 import static java.awt.Scrollbar.HORIZONTAL;
 
@@ -126,19 +143,11 @@ class JFrame_ObrobkaEgg extends JFrame {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
                 jlabel_shisloScorostObrabotki.setText(String.format("%1$.3f мм/сек",
                         (double) jscrollbar_scorostObrabotki.getValue() / 300));
-               if (Param_Profile.isSecondGeneration()){
                    scorostObrabotki = 650000 / jscrollbar_scorostObrabotki.getValue();
-               } else{
-                   scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();  
-               }
             }
         });
         jpanelKnopki.add(jscrollbar_scorostObrabotki);
-        if (Param_Profile.isSecondGeneration()){
-            scorostObrabotki = 650000 / jscrollbar_scorostObrabotki.getValue();
-        } else{
-            scorostObrabotki = 300000 / jscrollbar_scorostObrabotki.getValue();  
-        }
+        scorostObrabotki = 650000 / jscrollbar_scorostObrabotki.getValue();
 
         jscrollbar_tonalnist = new JScrollBar(HORIZONTAL, 50, 1, 20, 81);
         jscrollbar_tonalnist.setSize(3 * jpanelKnopki.getWidth() / 5, vusotaElementa);
@@ -751,9 +760,9 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void saveObrobkaToFile(boolean ProcessFinished) {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
 
-            File imgFile = FileUtils.getFile("tmpSave\\imgFile"+Param_Profile.getFileAppender()+".bmp");
+            File imgFile = FileUtils.getFile("tmpSave\\imgFile.bmp");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_scorostObrabotki.getValue());
                 rf.writeInt(jscrollbar_tonalnist.getValue());
@@ -778,8 +787,8 @@ class JFrame_ObrobkaEgg extends JFrame {
 
     synchronized private void loadObrobkaFromFile() {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
-            File imgFile = FileUtils.getFile("tmpSave/imgFile"+Param_Profile.getFileAppender()+".bmp");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
+            File imgFile = FileUtils.getFile("tmpSave/imgFile.bmp");
            
             rf.seek(0);
             if (rf.readInt() == 0) return;

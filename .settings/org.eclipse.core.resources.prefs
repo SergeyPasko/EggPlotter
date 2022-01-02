@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
 encoding//src/main/resources/Dvijenie.properties=UTF-8
-encoding//src/main/resources/Dvijenie2.properties=UTF-8
 encoding//src/main/resources/ObrabotkaEgg.properties=UTF-8
-encoding//src/main/resources/ObrabotkaEgg2.properties=UTF-8
-encoding//src/main/resources/SnatieRazmerov2.properties=UTF-8
+encoding//src/main/resources/SnatieRazmerov.properties=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

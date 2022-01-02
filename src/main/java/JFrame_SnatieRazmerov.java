@@ -1,5 +1,5 @@
-import static java.awt.Scrollbar.HORIZONTAL;
-
+import Config.Param_SnatieRazmerov;
+import drawPanels.Draw_SnatieRazmerov;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -11,7 +11,6 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,11 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollBar;
 import javax.swing.JToggleButton;
-
-import Config.Param_Profile;
-import Config.Param_SnatieRazmerov;
-import drawPanels.Draw_SnatieRazmerov;
 import utils.FileUtils;
+
+import static java.awt.Scrollbar.HORIZONTAL;
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,16 +63,8 @@ class JFrame_SnatieRazmerov extends JFrame {
     boolean canResiveImage = false;
     int razrez[];
     
-    static int koefValue;
+    static int koefValue=12;
     
-    static{
-    	if (Param_Profile.isSecondGeneration()){
-    		koefValue=12;
-    	} else{
-    		koefValue=10;
-    	}
-    }
-
     public JFrame_SnatieRazmerov(Zapusk zapusk) {
         this.zapusk = zapusk;
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
@@ -108,7 +97,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jscrollbar_shirinaZagotovki.setLocation(mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         jscrollbar_shirinaZagotovki.addAdjustmentListener(new AdjustmentListener() {
             public final void adjustmentValueChanged(AdjustmentEvent e) {
-                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-8:0)+ " мм");
+                jlabel_shisloShirina.setText(jscrollbar_shirinaZagotovki.getValue() -8+ " мм");
                 drawPanel.setLocation((shirinaOkna - (jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue)) / 2 - 4, 0);
                 razmerZagotovki = jscrollbar_shirinaZagotovki.getValue() * koefValue - 2 * polosaOgranishenia * koefValue + 1;
                 drawPanel.setSize(razmerZagotovki, vusotaOkna - 6 * vusotaElementa - 30);
@@ -138,7 +127,7 @@ class JFrame_SnatieRazmerov extends JFrame {
         jlabel_podpisShirina.setLocation(0, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_podpisShirina);
 
-        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() +(Param_Profile.isSecondGeneration()?-8:0) + " мм", JLabel.CENTER);
+        jlabel_shisloShirina = new JLabel(jscrollbar_shirinaZagotovki.getValue() -8 + " мм", JLabel.CENTER);
         jlabel_shisloShirina.setSize(mainPanel.getWidth() / 5, vusotaElementa);
         jlabel_shisloShirina.setLocation(4 * mainPanel.getWidth() / 5, mainPanel.getHeight() - 30 - 6 * vusotaElementa);
         mainPanel.add(jlabel_shisloShirina);
@@ -468,7 +457,7 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void saveRazrezToFile(boolean ProcessFinished) {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez"+Param_Profile.getFileAppender()+".res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
             if (ProcessFinished) {
                 rf.writeInt(jscrollbar_shirinaZagotovki.getValue());
             } else {
@@ -481,7 +470,7 @@ class JFrame_SnatieRazmerov extends JFrame {
                     rf.writeInt(drawPanel.massivKoordinat[i][j]);
                 }
 
-            rf =  FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings"+Param_Profile.getFileAppender()+".res");
+            rf =  FileUtils.getRandomAccersFile("tmpSave/ObrabkaSettings.res");
             rf.writeInt(0);
             rf.close();
 
@@ -492,7 +481,7 @@ class JFrame_SnatieRazmerov extends JFrame {
 
     synchronized private void loadRazrezFromFile() {
         try {
-        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez"+Param_Profile.getFileAppender()+".res");
+        	RandomAccessFile rf = FileUtils.getRandomAccersFile("tmpSave/Razrez.res");
             rf.seek(0);
             if (rf.readInt() == 0) return;
             else {
