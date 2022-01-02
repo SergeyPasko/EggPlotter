@@ -22,16 +22,12 @@ class Dvijenie {
 	int vusotaPodjomaNashalna = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.VUSOTAPODJOMANASHALNA);
 	int cmechenieNashalneY = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.SMESHENIENASHALNE);
 	int komandNaPovorot = Param_Dvijenie.getInstance().getProperty(Param_Dvijenie.HAGOVNAPOVOROT);
-	private int[] vlevoVpravoX = new int[]{1, 3, 2, 6, 4, 12, 8, 9};
-	private int[] vverhVnuzY = new int[]{128, 160, 32, 96, 64, 80, 16, 144};
-	private int[] vverhVnuzZ = new int[]{15, 14, 10, 2, 3, 1, 9, 13};
-	/*
-	 * Перший Зміщення вверх/вниз на 100мм 1000команд поворот вліво/вправо на
-	 * 360град 1580команд зміщення вверх/вниз по Z на 34мм 400команд 
-	 */
+    private int[] vlevoVpravoX = new int[]{1, 3, 2, 6, 4, 12, 8, 9};
+    private int[] vverhVnuzY = new int[]{144, 16, 80, 64, 96, 32, 160, 128};
+    private int[] vverhVnuzZ = new int[]{15, 14, 10, 2, 3, 1, 9, 13};
 
 	/*
-	 * Другий Зміщення вверх/вниз на 166мм 2000команд поворот вліво/вправо на
+	 * Зміщення вверх/вниз на 166мм 2000команд поворот вліво/вправо на
 	 * 360град 2000команд зміщення вверх/вниз по Z на 166мм 2000команд
 	 */
 
